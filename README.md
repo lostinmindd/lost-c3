@@ -64,11 +64,13 @@ After using `lost-c3 create-addon --plugin` we get default file structure for cr
 
 ## Config Setup
 
-Let's setup lost config at first.
+Let's setup _`lost.config.ts`_ file at first.
 
 ```typescript
+import { Lost } from "lost-lib";
+
 export const LostConfig: Lost.IConfig = {
-    RemoveExportInJSFiles: true,
+    RemoveExportInJSFiles: true, // Set to true to remove error after building project
 
     AddonId: "addon_id",
     Type: "plugin", // Addon type: plugin, behavior
@@ -77,17 +79,70 @@ export const LostConfig: Lost.IConfig = {
     AddonName: "Addon for Construct 3", // Shows in addon install dialog
     AddonDescription: "Addon description...", // Shows in addon install dialog
     Version: "1.0.0.0",
-    Author: "lostinmind",
+    Author: "YourName",
     WebsiteURL: "https://addon.com",
     DocsURL: "https://docs.addon.com",
     ObjectName: "MyLostPlugin", // Applying when creates an plugin object
-    Scripts: [] // Add scripts here 
+    Scripts: [] // Add your scripts/libraries here 
 }
-[Using custom libraries/scripts](#-using-custom-libraries/scripts)
 ```
+Check more info about using scripts OR libraries in your addon:
+_[Using custom libraries/scripts](#-using-custom-libraries/scripts)_
 
 ## Using custom libraries/scripts
 
+It's available to use custom scripts or libraries in your addon.
+
+- Add any library file (_`library.js`)_ into _`src/libs/`_ folder.
+
+> [!IMPORTANT]
+> You should update _`lost.config.ts`_ file and add your script here.
+
+Example 
+
+```typescript
+import { Lost } from "lost-lib";
+
+export const LostConfig: Lost.IConfig = {
+    RemoveExportInJSFiles: true,
+
+    AddonId: "addon_id",
+    Type: "plugin",
+    Category: "general",
+    IsSingleGlobal: true,
+    AddonName: "Addon for Construct 3",
+    AddonDescription: "Addon description...",
+    Version: "1.0.0.0",
+    Author: "lostinmind",
+    WebsiteURL: "https://addon.com",
+    DocsURL: "https://docs.addon.com",
+    ObjectName: "MyLostPlugin",
+    Scripts: [
+        {FileName: 'lib.js', Type: 'external-runtime-script'}
+    ]
+}
+```
+
+In that case we added new object in _`Scripts`_ property. That object has some own properties:
+
+```typescript
+- FileName: string // Use only file name. Example: lib.js
+- Type: "external-runtime-script" | "copy-to-output" | "inline-script" | "external-dom-script"
+```
+
+> [!NOTE]
+> Useful information for choosing _`Type`_ property value:
+> https://www.construct.net/en/make-games/manuals/addon-sdk/reference/specifying-dependencies#internalH1Link0
+
+> [!TIP]
+> It's recommended to use _`.d.ts`_ files to easy code writing.
+> You can also move them into _`src/libs/`_ folder.
+
+> [!WARNING]
+> If you passed adding script into _`lost.config.ts`_ file. The script will be automatically added with __Type: _"external-dom-script"___
+
+> [!WARNING]
+> Use only .js libraries.
 
 ## Creating category
 
