@@ -1,5 +1,5 @@
+![alt text](https://github.com/lostinmindd/lost-c3/blob/main/lost-cover.jpg?raw=true)
 <div align="center">
-  ![alt text](https://github.com/lostinmindd/lost-c3/blob/main/lost-cover.jpg?raw=true)
   <h3>
     Library for easy making Construct 3 Addons. <br />
   </h3>
