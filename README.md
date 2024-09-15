@@ -602,13 +602,13 @@ Main domSide class is available at path _`src/addon/c3runtime/domSide.ts`_
 > }
 > ```
 
-# Building addon
+## Building addon
 
 To build addon into `addon.c3addon` file you should use `npm run build` __OR__ `lost-c3 build`
 
 `.c3addon` file will be available in your main folder when you are developing your addon.
 
-# Testing addons in developer mode
+## Testing addons in developer mode
 
 To run test server you should use `npm run server` __OR__ `lost-c3 server`
 
