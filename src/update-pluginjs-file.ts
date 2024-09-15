@@ -12,7 +12,7 @@ export async function updatePluginJSFile(lostConfig: Lost.IConfig, pluginPropert
         const pluginProps: string[] = getPluginProps(pluginProperties);
         const dependencies = lostConfig.Scripts;
 
-        const formattedDependencies = dependencies.map(dep => `this._info.AddFileDependency({filename: "${dep.FileName}", type: "${dep.Type}"})`).join('\n');
+        const formattedDependencies = dependencies.map(dep => `this._info.AddFileDependency({filename: "libs/${dep.FileName}", type: "${dep.Type}"})`).join('\n');
 
         const formattedProperties = pluginProps.map(prop => `            ${prop}`).join(',\n');
 
