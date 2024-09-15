@@ -1,0 +1,40 @@
+{
+  "name": "lost-c3",
+  "version": "2.1.0",
+  "description": "Lost for easy Construct 3 Addons",
+  "main": "dist/cli.js",
+  "bin": {
+    "lost-c3": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/cli.js"
+  },
+  "dependencies": {
+    "@types/node": "^22.5.4",
+    "archiver": "^7.0.1",
+    "console-log-colors": "^0.5.0",
+    "esm": "^3.2.25",
+    "express": "^4.21.0",
+    "fs-extra": "^11.2.0",
+    "lost-lib": "^1.3.0",
+    "module-alias": "^2.2.3",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.6.2",
+    "yargs": "^17.7.2"
+  },
+  "author": "lostinmind",
+  "license": "MIT",
+  "_moduleAliases": {
+    "@lost": "dist/@lost-lib/lost",
+    "@lost-props": "dist/@lost-lib/lost-plugin-props",
+    "@lost-params": "dist/@lost-lib/lost-params"
+  },
+  "devDependencies": {
+    "@types/archiver": "^6.0.2",
+    "@types/fs-extra": "^11.0.4",
+    "@types/module-alias": "^2.0.4",
+    "@types/yargs": "^17.0.33"
+  }
+}

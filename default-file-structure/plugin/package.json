@@ -1,0 +1,15 @@
+{
+  "type": "module",
+  "name": "my-lost-addon",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "lost-c3 build",
+    "server": "lost-c3 server"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "lost-lib": "^1.3.0"
+  }
+}
