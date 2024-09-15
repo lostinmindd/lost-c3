@@ -5,7 +5,7 @@
   </h3>
 </div>
 
-Lost is a...
+__Lost__ is a library for easy making Construct 3 addons that was created by lostinmind.
 
 ## Key features:
 
