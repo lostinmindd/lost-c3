@@ -29,11 +29,11 @@ lost-c3 create-addon --plugin
 npm run build
 ```
 
-# 🚀 Documentation
+# 📝 Documentation
 
 After using `lost-c3 create-addon --plugin` we get default file structure for creating addon.
 
-## Addon File Structure
+## 🧱 Addon File Structure
 
 ``` bash
 ├── build/                      # Final built folder (creates automatically after build)
@@ -62,7 +62,7 @@ After using `lost-c3 create-addon --plugin` we get default file structure for cr
 ├── tsconfig.json               # 'tsconfig.json' file
 ```
 
-## Config Setup
+## ⚙️ Config Setup
 
 Let's setup _`lost.config.ts`_ file at first.
 
@@ -89,7 +89,7 @@ export const LostConfig: Lost.IConfig = {
 Check more info about using scripts OR libraries in your addon:
 _[Using custom libraries/scripts](#-using-custom-libraries/scripts)_
 
-## Using custom libraries/scripts
+## 📚 Using custom libraries/scripts
 
 It's available to use custom scripts or libraries in your addon.
 
@@ -144,7 +144,7 @@ In that case we added new object in _`Scripts`_ property. That object has some o
 > [!WARNING]
 > Use only .js libraries.
 
-## Creating category
+## 📁 Creating category
 
 To create category you should create new  __`CategoryName.ts`__ file in _`src/categories`_ folder.
 Then you can use code snippet __`!CC`__ to create default Category structure or copy-paste below script.
@@ -180,7 +180,7 @@ export const Category: Lost.ICategory = {
 > [!CAUTION]
 > DO NOT CHANGE __`Category`__ VARIABLE NAME!'
 
-### Create action
+### ⚡️ Create action
 
 To create actions for your addon you should use _`Actions[]`_ property in __`Category`__ variable.
 
@@ -251,7 +251,7 @@ function LogToConsole(message: string) {
 > [!WARNING]
 > It's important to use {0}, {1} as parameter placeholders inside _DisplayText_ property if you have any parameters inside your function (excluding _this_ parameter as _SDKInstanceClass_ Type)
 
-### Create condition
+### ❓ Create condition
 
 To create conditions for your addon you should use _`Conditions[]`_ property in __`Category`__ variable.
 
@@ -323,7 +323,7 @@ function OnEvent(eventIndex: number) {
 > [!WARNING]
 > It's important to use {0}, {1} as parameter placeholders inside _DisplayText_ property if you have any parameters inside your function (excluding _this_ parameter as _SDKInstanceClass_ Type)
 
-### Create expression
+### 🧮 Create expression
 
 To create expressions for your addon you should use _`Expressions[]`_ property in __`Category`__ variable.
 
@@ -372,7 +372,7 @@ function GetValue() {
 > [!CAUTION]
 > Lost library isn't checking parameters that you use in Expressions at that moment. But you must use only __StringParam__ OR __NumberParam__ OR __AnyParam__
 
-### Deprecating _Actions_, _Conditions_, _Expressions_
+### 💢 Deprecating _Actions_, _Conditions_, _Expressions_
 
 > [!CAUTION]
 > Do not delete any actions, conditions, expressions from your category file.
@@ -472,7 +472,7 @@ function LogToConsole(message: string) {
 }
 ```
 
-## Using Instance and DOM Calls
+## 🌳 Using Instance and DOM Calls
 
 Also you have an ability to use instance AND domSide scripts classes to implement your custom logic to addon.
 Main instance class is available at path _`src/addon/c3runtime/instance.ts`_.
@@ -531,8 +531,6 @@ Main domSide class is available at path _`src/addon/c3runtime/domSide.ts`_
 > }
 > ```
 
-#
-
-# License
+# 🪪 License
 
 MIT
