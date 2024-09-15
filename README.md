@@ -16,14 +16,14 @@ Lost is a...
 
 # 🚀 Quickstart
 
-Install lost-c3 library by using `npm i lost-c3`
+Install global lost-c3 library by using `npm i lost-c3 -g`
 
 Create a bare-bones Lost Addon by using `lost-c3 create-addon --plugin`:
 Now only `--plugin argument is only available to create plugin structure`
 _Behaviors and other will be available in future._
 
 ```
-npm i lost-c3
+npm i lost-c3 -g
 lost-c3 create-addon --plugin
 npm run build
 ```
