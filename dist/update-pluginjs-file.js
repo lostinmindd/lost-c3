@@ -13,7 +13,7 @@ async function updatePluginJSFile(lostConfig, pluginProperties) {
     return new Promise(async (res, rej) => {
         const pluginProps = getPluginProps(pluginProperties);
         const dependencies = lostConfig.Scripts;
-        const formattedDependencies = dependencies.map(dep => `this._info.AddFileDependency({filename: "${dep.FileName}", type: "${dep.Type}"})`).join('\n');
+        const formattedDependencies = dependencies.map(dep => `this._info.AddFileDependency({filename: "libs/${dep.FileName}", type: "${dep.Type}"})`).join('\n');
         const formattedProperties = pluginProps.map(prop => `            ${prop}`).join(',\n');
         const fileContent = fs_1.default.readFileSync(pluginjsPath, 'utf8');
         const regexProps = /this\._info\.SetProperties\(\[.*?\]\)/s;
