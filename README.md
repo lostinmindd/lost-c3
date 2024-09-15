@@ -9,10 +9,11 @@ __Lost__ is a library for easy making Construct 3 addons that was created by los
 
 ## Key features:
 
-- Instant config creation
-- Easy Actions, Conditions, Expressions defining
-- Fast build and bundle addon into .c3addon file
-- Real-time test addon in Construct 3 by server implementation feature
+- __[Quickstart](#-quickstart)__
+- __[Specifying plugin properties](#️-specifying-plugin-properties)__
+- __[Creating category](#-creating-category)__
+- __[Building addon](#-building-addon)__
+- __[Testing addon](#-testing-addons)__
 
 
 # 🚀 Quickstart
