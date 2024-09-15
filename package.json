@@ -1,6 +1,6 @@
 {
   "name": "lost-c3",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Lost for easy Construct 3 Addons",
   "main": "dist/cli.js",
   "bin": {

@@ -17,7 +17,7 @@ function copyFolderContentsRecursiveSync(source: string, target: string) {
         if (fs.lstatSync(currentSource).isDirectory()) {
             // Если это папка, создаем её в целевой директории и рекурсивно копируем её содержимое
             if (!fs.existsSync(currentTarget)) {
-                fs.mkdirSync(currentTarget);
+                fs.mkdirSync(currentTarget, { recursive: true });
             }
             copyFolderContentsRecursiveSync(currentSource, currentTarget);
         } else {
