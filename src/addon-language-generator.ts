@@ -64,32 +64,31 @@ export async function createLanguageJSONFile(LostConfig: Lost.IConfig, categorie
     
                 if (action.Params) {
     
+                    let params: any = {};
+
                     action.Params.forEach(param => {
-    
-                        languageAction["params"] = {};
+
+                        params[param.Options.Id] = {
+                            "name": param.Options.Name,
+                            "desc": (param.Options.Description) ? param.Options.Description : ""
+                        }
                         
-                        if (languageAction["params"]) {
-                            languageAction["params"][param.Options.Id] = {
-                                "name": param.Options.Name,
-                                "desc": (param.Options.Description) ? param.Options.Description : ""
-                            }
-                            
-                            if (param.Type === ParamType.COMBO) {
-    
-                                languageAction["params"][param.Options.Id]["items"] = {};
-                                const param_path = languageAction["params"][param.Options.Id]["items"];
-                                //@ts-ignore
-                                param.Options.Items.forEach((item: ComboItemType) => {
-                                    if (param_path) {
-                                        param_path[item.Id] = item.Name;
-                                    }
-                                })
-    
-                            }
-    
+                        if (param.Type === ParamType.COMBO) {
+
+                            params[`${param.Options.Id}`]["items"] = {};
+                            const param_path = params[`${param.Options.Id}`]["items"];
+                            //@ts-ignore
+                            param.Options.Items.forEach((item: ComboItemType) => {
+                                if (param_path) {
+                                    param_path[item.Id] = item.Name;
+                                }
+                            })
+
                         }
     
                     })
+
+                    languageAction["params"] = params;
     
                 }
     
@@ -107,32 +106,31 @@ export async function createLanguageJSONFile(LostConfig: Lost.IConfig, categorie
 
                 if (condition.Params) {
     
+                    let params: any = {};
+
                     condition.Params.forEach(param => {
-    
-                        languageCondition["params"] = {};
+
+                        params[param.Options.Id] = {
+                            "name": param.Options.Name,
+                            "desc": (param.Options.Description) ? param.Options.Description : ""
+                        }
                         
-                        if (languageCondition["params"]) {
-                            languageCondition["params"][param.Options.Id] = {
-                                "name": param.Options.Name,
-                                "desc": (param.Options.Description) ? param.Options.Description : ""
-                            }
-                            
-                            if (param.Type === ParamType.COMBO) {
-    
-                                languageCondition["params"][param.Options.Id]["items"] = {};
-                                const param_path = languageCondition["params"][param.Options.Id]["items"];
-                                //@ts-ignore
-                                param.Options.Items.forEach((item: ComboItemType) => {
-                                    if (param_path) {
-                                        param_path[item.Id] = item.Name;
-                                    }
-                                })
-    
-                            }
-    
+                        if (param.Type === ParamType.COMBO) {
+
+                            params[param.Options.Id]["items"] = {};
+                            const param_path = params[param.Options.Id]["items"];
+                            //@ts-ignore
+                            param.Options.Items.forEach((item: ComboItemType) => {
+                                if (param_path) {
+                                    param_path[item.Id] = item.Name;
+                                }
+                            })
+
                         }
     
                     })
+
+                    languageCondition["params"] = params;
     
                 }
     
@@ -148,21 +146,19 @@ export async function createLanguageJSONFile(LostConfig: Lost.IConfig, categorie
                 languageExpression["description"] = (expression.Description) ? expression.Description : "";
 
                 if (expression.Params) {
+
+                    let params: any = {};
     
                     expression.Params.forEach(param => {
     
-                        languageExpression["params"] = {};
-                        
-                        if (languageExpression["params"]) {
-                            languageExpression["params"][param.Options.Id] = {
-                                "name": param.Options.Name,
-                                "desc": (param.Options.Description) ? param.Options.Description : ""
-                            }
-    
+                        params[param.Options.Id] = {
+                            "name": param.Options.Name,
+                            "desc": (param.Options.Description) ? param.Options.Description : ""
                         }
     
                     })
     
+                    languageExpression["params"] = params;
                 }
     
                 LanguageJSON["text"]["plugins"][PLUGIN_ID].expressions[expression.Id] = languageExpression;
