@@ -53,25 +53,24 @@ async function createLanguageJSONFile(LostConfig, categories, pluginProperties) 
                 languageAction["display-text"] = action.DisplayText;
                 languageAction["description"] = (action.Description) ? action.Description : "";
                 if (action.Params) {
+                    let params = {};
                     action.Params.forEach(param => {
-                        languageAction["params"] = {};
-                        if (languageAction["params"]) {
-                            languageAction["params"][param.Options.Id] = {
-                                "name": param.Options.Name,
-                                "desc": (param.Options.Description) ? param.Options.Description : ""
-                            };
-                            if (param.Type === "combo" /* ParamType.COMBO */) {
-                                languageAction["params"][param.Options.Id]["items"] = {};
-                                const param_path = languageAction["params"][param.Options.Id]["items"];
-                                //@ts-ignore
-                                param.Options.Items.forEach((item) => {
-                                    if (param_path) {
-                                        param_path[item.Id] = item.Name;
-                                    }
-                                });
-                            }
+                        params[param.Options.Id] = {
+                            "name": param.Options.Name,
+                            "desc": (param.Options.Description) ? param.Options.Description : ""
+                        };
+                        if (param.Type === "combo" /* ParamType.COMBO */) {
+                            params[`${param.Options.Id}`]["items"] = {};
+                            const param_path = params[`${param.Options.Id}`]["items"];
+                            //@ts-ignore
+                            param.Options.Items.forEach((item) => {
+                                if (param_path) {
+                                    param_path[item.Id] = item.Name;
+                                }
+                            });
                         }
                     });
+                    languageAction["params"] = params;
                 }
                 LanguageJSON["text"]["plugins"][PLUGIN_ID].actions[action.Id] = languageAction;
             });
@@ -81,25 +80,24 @@ async function createLanguageJSONFile(LostConfig, categories, pluginProperties) 
                 languageCondition["display-text"] = condition.DisplayText;
                 languageCondition["description"] = (condition.Description) ? condition.Description : "";
                 if (condition.Params) {
+                    let params = {};
                     condition.Params.forEach(param => {
-                        languageCondition["params"] = {};
-                        if (languageCondition["params"]) {
-                            languageCondition["params"][param.Options.Id] = {
-                                "name": param.Options.Name,
-                                "desc": (param.Options.Description) ? param.Options.Description : ""
-                            };
-                            if (param.Type === "combo" /* ParamType.COMBO */) {
-                                languageCondition["params"][param.Options.Id]["items"] = {};
-                                const param_path = languageCondition["params"][param.Options.Id]["items"];
-                                //@ts-ignore
-                                param.Options.Items.forEach((item) => {
-                                    if (param_path) {
-                                        param_path[item.Id] = item.Name;
-                                    }
-                                });
-                            }
+                        params[param.Options.Id] = {
+                            "name": param.Options.Name,
+                            "desc": (param.Options.Description) ? param.Options.Description : ""
+                        };
+                        if (param.Type === "combo" /* ParamType.COMBO */) {
+                            params[param.Options.Id]["items"] = {};
+                            const param_path = params[param.Options.Id]["items"];
+                            //@ts-ignore
+                            param.Options.Items.forEach((item) => {
+                                if (param_path) {
+                                    param_path[item.Id] = item.Name;
+                                }
+                            });
                         }
                     });
+                    languageCondition["params"] = params;
                 }
                 LanguageJSON["text"]["plugins"][PLUGIN_ID].conditions[condition.Id] = languageCondition;
             });
@@ -108,15 +106,14 @@ async function createLanguageJSONFile(LostConfig, categories, pluginProperties) 
                 languageExpression["translated-name"] = expression.DisplayText;
                 languageExpression["description"] = (expression.Description) ? expression.Description : "";
                 if (expression.Params) {
+                    let params = {};
                     expression.Params.forEach(param => {
-                        languageExpression["params"] = {};
-                        if (languageExpression["params"]) {
-                            languageExpression["params"][param.Options.Id] = {
-                                "name": param.Options.Name,
-                                "desc": (param.Options.Description) ? param.Options.Description : ""
-                            };
-                        }
+                        params[param.Options.Id] = {
+                            "name": param.Options.Name,
+                            "desc": (param.Options.Description) ? param.Options.Description : ""
+                        };
                     });
+                    languageExpression["params"] = params;
                 }
                 LanguageJSON["text"]["plugins"][PLUGIN_ID].expressions[expression.Id] = languageExpression;
             });

@@ -2,8 +2,7 @@ import { green, log, magenta, red } from "console-log-colors";
 import * as fs from "fs";
 import path from "path";
 
-export // Функция для копирования содержимого папки рекурсивно
-function copyFolderContentsRecursiveSync(source: string, target: string) {
+export function copyFolderContentsRecursiveSync(source: string, target: string) {
     if (!fs.existsSync(source)) {
         console.error(red(`Папка ${source} не существует`));
         return;
