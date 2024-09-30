@@ -1,53 +1,61 @@
 #!/usr/bin/env node
 require('module-alias/register');
-import { cyan, green, log, magentaBG, red } from 'console-log-colors';
+import { bgBlack, blueBright, greenBright, log, magentaBG} from 'console-log-colors';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-
-import { buildAddon } from '.';
-import { runAddonServer } from './server';
-import { openUrl } from './misc-functions';
+import { runAddonServer } from './v2/run-server';
+import { openUrl } from './v2/misc-functions';
 import path from 'path';
-import { copyFolderContentsRecursiveSync } from './misc/copy-folder-recursive';
+import { copyBaseAddonFiles } from './v2/copy-base-addon-files';
 import { exec } from 'child_process';
+import { build } from './v2';
 
-yargs(hideBin(process.argv))
-    .command('create-addon', 'Create addon structure', (yargs) => {
-        return yargs
-            .option('plugin', {
-                alias: 'p',
-                type: 'boolean',
-                description: 'Create plugin addon structure'
-            })
+/**
+ * Initialize lost addon file structure
+ */
+yargs(hideBin(process.argv)).command('init', 'Initialize lost addon file structure', (yargs) => {
+    return yargs.option('plugin', 
+        {
+            alias: 'a',
+            type: 'boolean',
+            description: 'Create plugin addon structure'
+        })
     }, (argv) => {
-        const sourceFolder = path.resolve(__dirname, '../default-file-structure')
+        let addonType = "plugin";
+
+        if (argv.plugin) addonType = "plugin";
+
+        const sourceFolder = path.resolve(__dirname, `../default-file-structure/${addonType}`)
         const targetDir = process.cwd();
 
         if (argv.plugin) {
             log(`Creating ${magentaBG('plugin')} file structure...`, 'white');
-            copyFolderContentsRecursiveSync(path.join(sourceFolder, 'plugin'), targetDir);
+            copyBaseAddonFiles(sourceFolder, targetDir);
             exec('npm i');
         }
-    })
-    .help()
-    .argv;
+})
+.help()
+.argv;
 
-yargs(hideBin(process.argv))
-    .command('build', 'Build addon', () => {}, () => {
-        buildAddon().then(data => {
-            log(`${green('Addon was built successfully!')}`, 'bold');
-            return;
-        }).catch(reason => {
-            log(red(` -- Error occured while building addon.`), 'white');
-            log(`${cyan(' -- Reason:')} ${reason}`, 'white');
+/**
+ * Build addon
+ */
+yargs(hideBin(process.argv)).command('build', 'Build addon', () => {}, () => {
+    log('\n' + bgBlack(blueBright('Start building addon...')) + '\n', 'white');
+    
+    exec('npm run build', (error, stdout, stderr) => {
+        if (!error) build().then(() => {
+            log(`${bgBlack(greenBright('Addon was built successfully!'))}`, 'bold');
         })
-    })
-    .help()
-    .argv;
+        // log(`${bgBlack(greenBright('Addon was built successfully!'))}`, 'bold');
+    });
+}).help().argv;
 
-
+/**
+ * Run addon dev server
+ */
 yargs(hideBin(process.argv))
-    .command('server', 'Run test server', (yargs) => {
+    .command('server', 'Run addon dev server', (yargs) => {
         return yargs
             .option('open', {
                 alias: 'o',
@@ -55,13 +63,13 @@ yargs(hideBin(process.argv))
                 description: 'Open construct page when server run'
             })
     }, (yargs) => {
-        buildAddon().then(data => {
-            runAddonServer().then((port) => {
+        build().then(data => {
+            runAddonServer().then(() => {
                 if (yargs['open']) {
                     setTimeout(() => openUrl("https://editor.construct.net/?safe-mode"), 1000)
                 }
             })
         })
     })
-    .help()
-    .argv;
+.help()
+.argv;

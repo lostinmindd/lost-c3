@@ -1,21 +1,24 @@
+import { Config } from "@Config";
 
-const SDK = globalThis.SDK;
+const C3 = globalThis.C3;
 
-const PLUGIN_ID = 'lost_';
+class LostInstance extends globalThis.ISDKInstanceBase {
+	readonly PluginConditions = C3.Plugins[Config.AddonId].Cnds;
+	constructor() {
+		super();
+		
+		const properties = this._getInitProperties();
+		if (properties) {
 
-const PLUGIN_CLASS = SDK.Plugins[PLUGIN_ID];
+		}
 
-PLUGIN_CLASS.Instance = class LCInstance extends SDK.IInstanceBase
-{
-	constructor(sdkType: SDK.ITypeBase, inst: SDK.IObjectInstance) {
-		super(sdkType, inst);
 	}
-
-	Release() {}
-
-	OnCreate() {}
 	
-	OnPropertyChanged(id: string, value: EditorPropertyValueType) {}
+	_release() {
+		super._release();
+	}
+	
 };
 
-export {}
+C3.Plugins[Config.AddonId].Instance = LostInstance;
+export type { LostInstance as Instance };

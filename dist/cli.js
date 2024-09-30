@@ -8,45 +8,53 @@ require('module-alias/register');
 const console_log_colors_1 = require("console-log-colors");
 const yargs_1 = __importDefault(require("yargs"));
 const helpers_1 = require("yargs/helpers");
-const _1 = require(".");
-const server_1 = require("./server");
-const misc_functions_1 = require("./misc-functions");
+const run_server_1 = require("./v2/run-server");
+const misc_functions_1 = require("./v2/misc-functions");
 const path_1 = __importDefault(require("path"));
-const copy_folder_recursive_1 = require("./misc/copy-folder-recursive");
+const copy_base_addon_files_1 = require("./v2/copy-base-addon-files");
 const child_process_1 = require("child_process");
-(0, yargs_1.default)((0, helpers_1.hideBin)(process.argv))
-    .command('create-addon', 'Create addon structure', (yargs) => {
-    return yargs
-        .option('plugin', {
-        alias: 'p',
+const v2_1 = require("./v2");
+/**
+ * Initialize lost addon file structure
+ */
+(0, yargs_1.default)((0, helpers_1.hideBin)(process.argv)).command('init', 'Initialize lost addon file structure', (yargs) => {
+    return yargs.option('plugin', {
+        alias: 'a',
         type: 'boolean',
         description: 'Create plugin addon structure'
     });
 }, (argv) => {
-    const sourceFolder = path_1.default.resolve(__dirname, '../default-file-structure');
+    let addonType = "plugin";
+    if (argv.plugin)
+        addonType = "plugin";
+    const sourceFolder = path_1.default.resolve(__dirname, `../default-file-structure/${addonType}`);
     const targetDir = process.cwd();
     if (argv.plugin) {
         (0, console_log_colors_1.log)(`Creating ${(0, console_log_colors_1.magentaBG)('plugin')} file structure...`, 'white');
-        (0, copy_folder_recursive_1.copyFolderContentsRecursiveSync)(path_1.default.join(sourceFolder, 'plugin'), targetDir);
+        (0, copy_base_addon_files_1.copyBaseAddonFiles)(sourceFolder, targetDir);
         (0, child_process_1.exec)('npm i');
     }
 })
     .help()
     .argv;
-(0, yargs_1.default)((0, helpers_1.hideBin)(process.argv))
-    .command('build', 'Build addon', () => { }, () => {
-    (0, _1.buildAddon)().then(data => {
-        (0, console_log_colors_1.log)(`${(0, console_log_colors_1.green)('Addon was built successfully!')}`, 'bold');
-        return;
-    }).catch(reason => {
-        (0, console_log_colors_1.log)((0, console_log_colors_1.red)(` -- Error occured while building addon.`), 'white');
-        (0, console_log_colors_1.log)(`${(0, console_log_colors_1.cyan)(' -- Reason:')} ${reason}`, 'white');
+/**
+ * Build addon
+ */
+(0, yargs_1.default)((0, helpers_1.hideBin)(process.argv)).command('build', 'Build addon', () => { }, () => {
+    (0, console_log_colors_1.log)('\n' + (0, console_log_colors_1.bgBlack)((0, console_log_colors_1.blueBright)('Start building addon...')) + '\n', 'white');
+    (0, child_process_1.exec)('npm run build', (error, stdout, stderr) => {
+        if (!error)
+            (0, v2_1.build)().then(() => {
+                (0, console_log_colors_1.log)(`${(0, console_log_colors_1.bgBlack)((0, console_log_colors_1.greenBright)('Addon was built successfully!'))}`, 'bold');
+            });
+        // log(`${bgBlack(greenBright('Addon was built successfully!'))}`, 'bold');
     });
-})
-    .help()
-    .argv;
+}).help().argv;
+/**
+ * Run addon dev server
+ */
 (0, yargs_1.default)((0, helpers_1.hideBin)(process.argv))
-    .command('server', 'Run test server', (yargs) => {
+    .command('server', 'Run addon dev server', (yargs) => {
     return yargs
         .option('open', {
         alias: 'o',
@@ -54,8 +62,8 @@ const child_process_1 = require("child_process");
         description: 'Open construct page when server run'
     });
 }, (yargs) => {
-    (0, _1.buildAddon)().then(data => {
-        (0, server_1.runAddonServer)().then((port) => {
+    (0, v2_1.build)().then(data => {
+        (0, run_server_1.runAddonServer)().then(() => {
             if (yargs['open']) {
                 setTimeout(() => (0, misc_functions_1.openUrl)("https://editor.construct.net/?safe-mode"), 1000);
             }

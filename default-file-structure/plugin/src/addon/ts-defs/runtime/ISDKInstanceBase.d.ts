@@ -7,7 +7,7 @@
  // HACK: TypeScript doesn't seem to have good support for mixins yet.
  // As a workaround, the members of ISDKInstanceBase_ are defined twice: once deriving
  // from IInstance, and again deriving from IWorldInstance.
- declare class ISDKInstanceBase_ extends IInstance
+declare class ISDKInstanceBase_ extends IInstance
  {
      constructor(opts?: { domComponentId?: string, wrapperComponentId?: string });
  

@@ -1,0 +1,32 @@
+{
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "chrome": "60",
+            "firefox": "54",
+            "edge": "16",
+            "node": "12",
+            "esmodules": true
+          },
+          "modules": false
+        }
+      ],
+      "@babel/preset-typescript"
+    ],
+    "ignore": [
+      "**/*.d.ts"
+    ],
+    "plugins": [
+      ["@babel/plugin-proposal-decorators", { "version": "legacy" }],
+      ["@babel/plugin-proposal-class-properties", { "loose": true }],
+      ["module-resolver", {
+        "root": ["./src"],
+        "alias": {
+          "@Config": "./src/lost.config.js",
+          "@Instance": "../src/addon/Instance.js"
+        }
+      }]
+    ]
+  }
