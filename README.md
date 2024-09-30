@@ -8,7 +8,7 @@
 __Lost__ is a library for easy making Construct 3 addons that was created by lostinmind.
 
 ## Key features:
-
+- __[Examples](https://github.com/lostinmindd/lost-c3-examples)__
 - __[Quickstart](#-quickstart)__
 - __[Specifying plugin properties](#️-specifying-plugin-properties)__
 - __[Creating category](#-creating-category)__
