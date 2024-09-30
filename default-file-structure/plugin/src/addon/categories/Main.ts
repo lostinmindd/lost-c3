@@ -1,4 +1,4 @@
-import { Lost, Action } from "lost-lib"; 
+import { Lost, Action } from "lost-c3-lib"; 
 import type { Instance } from "@Instance";
 
 class MyCategory extends Lost.Category {

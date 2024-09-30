@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createLanguageJSONFile = createLanguageJSONFile;
-const lost_lib_1 = require("lost-lib");
+const lost_c3_lib_1 = require("lost-c3-lib");
 const globals_1 = require("./globals");
 const fs_1 = __importDefault(require("fs"));
 async function createLanguageJSONFile(config, categories, pluginProperties) {
@@ -31,7 +31,7 @@ async function createLanguageJSONFile(config, categories, pluginProperties) {
         let langProperty = {};
         langProperty.name = p.Options.Name;
         langProperty.desc = (p.Options.Description) ? p.Options.Description : "";
-        if (p.Type === lost_lib_1.Lost.PluginPropertyType.COMBO) {
+        if (p.Type === lost_c3_lib_1.Lost.PluginPropertyType.COMBO) {
             const Options = p.Options;
             langProperty["items"] = {};
             Options.Items.forEach((item) => {
@@ -55,7 +55,7 @@ async function createLanguageJSONFile(config, categories, pluginProperties) {
                         "name": param.Options.Name,
                         "desc": (param.Options.Description) ? param.Options.Description : ""
                     };
-                    if (param.Type === lost_lib_1.Lost.ParamType.COMBO) {
+                    if (param.Type === "combo" /* Lost.ParamType.COMBO */) {
                         const Options = param.Options;
                         params[Options.Id]["items"] = {};
                         Options.Items.forEach((item) => {
@@ -80,7 +80,7 @@ async function createLanguageJSONFile(config, categories, pluginProperties) {
                         "name": param.Options.Name,
                         "desc": (param.Options.Description) ? param.Options.Description : ""
                     };
-                    if (param.Type === lost_lib_1.Lost.ParamType.COMBO) {
+                    if (param.Type === "combo" /* Lost.ParamType.COMBO */) {
                         const Options = param.Options;
                         params[Options.Id]["items"] = {};
                         Options.Items.forEach((item) => {

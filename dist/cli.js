@@ -42,12 +42,8 @@ const v2_1 = require("./v2");
  */
 (0, yargs_1.default)((0, helpers_1.hideBin)(process.argv)).command('build', 'Build addon', () => { }, () => {
     (0, console_log_colors_1.log)('\n' + (0, console_log_colors_1.bgBlack)((0, console_log_colors_1.blueBright)('Start building addon...')) + '\n', 'white');
-    (0, child_process_1.exec)('npm run build', (error, stdout, stderr) => {
-        if (!error)
-            (0, v2_1.build)().then(() => {
-                (0, console_log_colors_1.log)(`${(0, console_log_colors_1.bgBlack)((0, console_log_colors_1.greenBright)('Addon was built successfully!'))}`, 'bold');
-            });
-        // log(`${bgBlack(greenBright('Addon was built successfully!'))}`, 'bold');
+    (0, v2_1.build)().then(() => {
+        (0, console_log_colors_1.log)('\n' + `${(0, console_log_colors_1.bgBlack)((0, console_log_colors_1.greenBright)('Addon was built successfully!'))}`, 'bold');
     });
 }).help().argv;
 /**
@@ -62,12 +58,10 @@ const v2_1 = require("./v2");
         description: 'Open construct page when server run'
     });
 }, (yargs) => {
-    (0, v2_1.build)().then(data => {
-        (0, run_server_1.runAddonServer)().then(() => {
-            if (yargs['open']) {
-                setTimeout(() => (0, misc_functions_1.openUrl)("https://editor.construct.net/?safe-mode"), 1000);
-            }
-        });
+    (0, run_server_1.runAddonServer)().then(() => {
+        if (yargs['open']) {
+            setTimeout(() => (0, misc_functions_1.openUrl)("https://editor.construct.net/?safe-mode"), 1000);
+        }
     });
 })
     .help()

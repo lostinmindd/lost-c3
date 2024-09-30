@@ -1,6 +1,12 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.build = build;
+const globals_1 = require("./globals");
+const fs_1 = __importDefault(require("fs"));
+const path_1 = __importDefault(require("path"));
 const get_config_1 = require("./get-config");
 const create_addon_structure_1 = require("./create-addon-structure");
 const get_plugin_properties_1 = require("./get-plugin-properties");
@@ -10,15 +16,27 @@ const create_aces_json_1 = require("./create-aces-json");
 const create_language_json_1 = require("./create-language-json");
 const add_all_entities_1 = require("./add-all-entities");
 const zip_addon_1 = require("./zip-addon");
+const console_log_colors_1 = require("console-log-colors");
 async function build() {
+    fs_1.default.mkdirSync(path_1.default.resolve(`${globals_1.SOURCE_FOLDER}/addon/libs`), { recursive: true });
+    fs_1.default.mkdirSync(path_1.default.resolve(`${globals_1.SOURCE_FOLDER}/addon/files`), { recursive: true });
+    (0, console_log_colors_1.log)(`Getting Lost config...`, 'white');
     const Config = await (0, get_config_1.getConfig)();
+    (0, console_log_colors_1.log)(`Getting plugin properties...`, 'white');
     const PluginProperties = await (0, get_plugin_properties_1.getPluginProperties)();
+    (0, console_log_colors_1.log)(`Getting plugin categories...`, 'white');
     const Categories = await (0, get_categories_1.getCategories)();
+    (0, console_log_colors_1.log)(`Creating addon structure..`, 'white');
     await (0, create_addon_structure_1.createAddonStructure)(Config, PluginProperties);
+    (0, console_log_colors_1.log)(`Creating ${(0, console_log_colors_1.yellow)('addon.json')} file...`, 'white');
     const AddonJSON = await (0, create_addon_json_1.createAddonJSONFile)(Config);
+    (0, console_log_colors_1.log)(`Creating ${(0, console_log_colors_1.yellow)('aces.json')} file...`, 'white');
     const AcesJSON = await (0, create_aces_json_1.createAcesJSONFile)(Categories);
+    (0, console_log_colors_1.log)(`Creating ${(0, console_log_colors_1.yellow)('en-US.json')} file...`, 'white');
     await (0, create_language_json_1.createLanguageJSONFile)(Config, Categories, PluginProperties);
+    (0, console_log_colors_1.log)(`Adding entities to ${(0, console_log_colors_1.yellow)('actions.js, conditions.js, expression.js')} file...`, 'white');
     await (0, add_all_entities_1.addAllEntitiesToFiles)(Categories);
+    (0, console_log_colors_1.log)(`Creating ${(0, console_log_colors_1.yellow)('.c3addon')} file...`, 'white');
     await (0, zip_addon_1.zipAddon)(Config);
     return true;
 }

@@ -19,7 +19,7 @@
 		"rootDir": "./src/",
 		"baseUrl": "./src",
 		"paths": {
-			"lost-lib": ["../../../../node_modules/lost-lib/src/index"]
+			"lost-c3-lib": ["../../../../node_modules/lost-c3-lib/src/index"]
 		},
 		"skipLibCheck": true,
 	},

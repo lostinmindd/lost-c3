@@ -1,4 +1,4 @@
-import { Lost, IntegerProperty} from "lost-lib"; 
+import { Lost, IntegerProperty} from "lost-c3-lib"; 
 
 const PluginProperties: Lost.PluginProperty[] = [
     new IntegerProperty({

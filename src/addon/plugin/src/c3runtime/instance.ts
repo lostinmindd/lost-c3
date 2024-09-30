@@ -1,4 +1,4 @@
-import type { Lost } from "lost-lib";
+import type { Lost } from "lost-c3-lib";
 const C3 = globalThis.C3;
 
 const Config: Lost.Config = {} as Lost.Config;

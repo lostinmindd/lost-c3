@@ -1,4 +1,4 @@
-import type { Lost } from "lost-lib";
+import type { Lost } from "lost-c3-lib";
 import type { SDKInstanceClass } from "./instance.js";
 
 const C3 = globalThis.C3;

@@ -1,4 +1,4 @@
-import { Lost } from "lost-lib";
+import { Lost } from "lost-c3-lib";
 import { ADDON_FOLDER } from "./globals";
 import fs from 'fs-extra';
 import path from 'path';

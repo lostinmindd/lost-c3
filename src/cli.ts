@@ -43,12 +43,9 @@ yargs(hideBin(process.argv)).command('init', 'Initialize lost addon file structu
 yargs(hideBin(process.argv)).command('build', 'Build addon', () => {}, () => {
     log('\n' + bgBlack(blueBright('Start building addon...')) + '\n', 'white');
     
-    exec('npm run build', (error, stdout, stderr) => {
-        if (!error) build().then(() => {
-            log(`${bgBlack(greenBright('Addon was built successfully!'))}`, 'bold');
-        })
-        // log(`${bgBlack(greenBright('Addon was built successfully!'))}`, 'bold');
-    });
+    build().then(() => {
+        log('\n' + `${bgBlack(greenBright('Addon was built successfully!'))}`, 'bold');
+    })
 }).help().argv;
 
 /**
@@ -63,12 +60,10 @@ yargs(hideBin(process.argv))
                 description: 'Open construct page when server run'
             })
     }, (yargs) => {
-        build().then(data => {
-            runAddonServer().then(() => {
-                if (yargs['open']) {
-                    setTimeout(() => openUrl("https://editor.construct.net/?safe-mode"), 1000)
-                }
-            })
+        runAddonServer().then(() => {
+            if (yargs['open']) {
+                setTimeout(() => openUrl("https://editor.construct.net/?safe-mode"), 1000)
+            }
         })
     })
 .help()

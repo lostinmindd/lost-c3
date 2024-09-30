@@ -1,4 +1,4 @@
-import type { Lost } from "lost-lib";
+import type { Lost } from "lost-c3-lib";
 
 enum PluginPropertyType {
     INTEGER = "integer", /**

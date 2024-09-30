@@ -1,4 +1,4 @@
-import { Lost } from 'lost-lib';
+import { Lost } from 'lost-c3-lib';
 import { CATEGORIES_FOLDER_PATH } from './globals';
 import fs from 'fs';
 import path from 'path';

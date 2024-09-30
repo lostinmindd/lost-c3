@@ -4,7 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createAcesJSONFile = createAcesJSONFile;
-const lost_lib_1 = require("lost-lib");
 const globals_1 = require("./globals");
 const fs_1 = __importDefault(require("fs"));
 async function createAcesJSONFile(categories) {
@@ -29,11 +28,11 @@ async function createAcesJSONFile(categories) {
                     aceParam.id = param.Options.Id;
                     aceParam.type = param.Type;
                     aceParam.initialValue = (param.Options.InitialValue) ? param.Options.InitialValue : "";
-                    if (param.Type === lost_lib_1.Lost.ParamType.STRING) {
+                    if (param.Type === "string" /* Lost.ParamType.STRING */) {
                         const Options = param.Options;
                         aceParam.autocompleteId = (Options.AutocompleteId) ? Options.AutocompleteId : false;
                     }
-                    if (param.Type === lost_lib_1.Lost.ParamType.COMBO) {
+                    if (param.Type === "combo" /* Lost.ParamType.COMBO */) {
                         const Options = param.Options;
                         let items = [];
                         Options.Items.forEach((item) => {
@@ -46,7 +45,7 @@ async function createAcesJSONFile(categories) {
                         if (items.indexOf(aceParam.initialValue) === -1)
                             aceParam.initialValue = items[0];
                     }
-                    if (param.Type === lost_lib_1.Lost.ParamType.OBJECT) {
+                    if (param.Type === "object" /* Lost.ParamType.OBJECT */) {
                         const Options = param.Options;
                         if (Options.AllowedPluginIds)
                             aceParam.allowedPluginIds = Options.AllowedPluginIds;
@@ -75,11 +74,11 @@ async function createAcesJSONFile(categories) {
                     aceParam.id = param.Options.Id;
                     aceParam.type = param.Type;
                     aceParam.initialValue = (param.Options.InitialValue) ? param.Options.InitialValue : "";
-                    if (param.Type === lost_lib_1.Lost.ParamType.STRING) {
+                    if (param.Type === "string" /* Lost.ParamType.STRING */) {
                         const Options = param.Options;
                         aceParam.autocompleteId = (Options.AutocompleteId) ? Options.AutocompleteId : false;
                     }
-                    if (param.Type === lost_lib_1.Lost.ParamType.COMBO) {
+                    if (param.Type === "combo" /* Lost.ParamType.COMBO */) {
                         const Options = param.Options;
                         let items = [];
                         Options.Items.forEach((item) => {
@@ -92,7 +91,7 @@ async function createAcesJSONFile(categories) {
                         if (items.indexOf(aceParam.initialValue) === -1)
                             aceParam.initialValue = items[0];
                     }
-                    if (param.Type === lost_lib_1.Lost.ParamType.OBJECT) {
+                    if (param.Type === "object" /* Lost.ParamType.OBJECT */) {
                         const Options = param.Options;
                         if (Options.AllowedPluginIds)
                             aceParam.allowedPluginIds = Options.AllowedPluginIds;
@@ -117,7 +116,7 @@ async function createAcesJSONFile(categories) {
                     aceParam.id = param.Options.Id;
                     aceParam.type = param.Type;
                     aceParam.initialValue = (param.Options.InitialValue) ? param.Options.InitialValue : "";
-                    if (param.Type === lost_lib_1.Lost.ParamType.STRING) {
+                    if (param.Type === "string" /* Lost.ParamType.STRING */) {
                         const Options = param.Options;
                         aceParam.autocompleteId = (Options.AutocompleteId) ? Options.AutocompleteId : false;
                     }

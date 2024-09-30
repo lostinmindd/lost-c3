@@ -1,4 +1,4 @@
-import { Lost } from "lost-lib";
+import { Lost } from "lost-c3-lib";
 
 const Config: Lost.Config = {
     /**

@@ -1,4 +1,4 @@
-import { Lost } from "lost-lib";
+import { Lost } from "lost-c3-lib";
 import { 
     ADDON_FOLDER, FINAL_INSTANCE_PATH, FINAL_LIBRARIES_FOLDER_PATH, 
     INSTANCE_PATH, LIBRARIES_FOLDER_PATH, PLUGIN_BONES_FOLDER_PATH, 

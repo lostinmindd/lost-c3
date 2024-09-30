@@ -1,4 +1,4 @@
-import { Lost } from "lost-lib";
+import { Lost } from "lost-c3-lib";
 import { CONFIG_PATH } from "./globals";
 
 export async function getConfig() {

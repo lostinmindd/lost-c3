@@ -1,4 +1,3 @@
-import { dim, green, log, magenta, yellow } from 'console-log-colors';
 import fs from 'fs';
 import path from 'path';
 import { C3RUNTIME_FOLDER_PATH } from './globals';

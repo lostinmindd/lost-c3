@@ -3,7 +3,8 @@
   "name": "my-first-lost-addon",
   "version": "1.0.0",
   "scripts": {
-    "build": "babel src --out-dir build/lost --extensions \".ts,.js\"",
+    "pre-build": "babel src --out-dir build/lost --extensions \".ts,.js\"",
+    "build": "npm run pre-build && lost-c3 build",
     "server": "npm run build && lost-c3 server",
     "dev": "nodemon --watch src --ext ts,js --exec \"npm run server\""
   },
@@ -21,6 +22,6 @@
     "nodemon": "^3.1.7"
   },
   "dependencies": {
-    "lost-lib": "^1.6.0"
+    "lost-c3-lib": "^2.0.0"
   }
 }
