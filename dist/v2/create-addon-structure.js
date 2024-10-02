@@ -20,7 +20,7 @@ async function createAddonStructure(config, pluginProperties) {
     const iconPath = `${globals_1.SOURCE_FOLDER}/${config.Icon.FileName}`;
     (0, misc_functions_1.copyFileAsync)(iconPath, `${globals_1.ADDON_FOLDER}/${config.Icon.FileName}`);
     createNewInstanceFile(config);
-    createNewDomSideFile(config);
+    // createNewDomSideFile(config);
     replaceConfigInAllFiles(config);
     replacePluginProperties(pluginProperties);
     // Copy all user libraries to addon folder

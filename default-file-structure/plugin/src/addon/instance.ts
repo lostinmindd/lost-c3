@@ -9,19 +9,12 @@ class LostInstance extends globalThis.ISDKInstanceBase {
 	readonly PluginConditions = C3.Plugins[Config.AddonId].Cnds;
 
 	constructor() {
-		super({ domComponentId: Config.AddonId });
+		super();
 		
 		const properties = this._getInitProperties();
 		if (properties) {
 
 		}
-
-        // this.runtime.addLoadPromise(
-        //     this._postToDOMAsync("get-something").then(user => {
-        //             console.log(user);
-        //         }
-        //     )
-        // )
 
 	}
 	

@@ -28,7 +28,7 @@ export async function createAddonStructure(config: Lost.Config, pluginProperties
 
     createNewInstanceFile(config);
 
-    createNewDomSideFile(config);
+    // createNewDomSideFile(config);
     
     replaceConfigInAllFiles(config);
 
