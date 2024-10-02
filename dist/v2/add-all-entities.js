@@ -30,6 +30,7 @@ async function addAllEntitiesToFiles(categories) {
     let allActions = {};
     let allConditions = {};
     let allExpressions = {};
+    // console.log(categories);
     categories.forEach(c => {
         c.Actions.forEach(a => {
             allActions[a.Options.ScriptName] = a.Options.Script;

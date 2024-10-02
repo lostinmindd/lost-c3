@@ -3,7 +3,9 @@ import {
     ADDON_FOLDER, FINAL_INSTANCE_PATH, FINAL_LIBRARIES_FOLDER_PATH, 
     INSTANCE_PATH, LIBRARIES_FOLDER_PATH, PLUGIN_BONES_FOLDER_PATH, 
     SOURCE_FOLDER, MAIN_PLUGIN_JS_PATH, FILES_FOLDER_PATH, 
-    FINAL_FILES_FOLDER_PATH } from "./globals";
+    FINAL_FILES_FOLDER_PATH, 
+    DOMSIDE_PATH,
+    FINAL_DOMSIDE_PATH} from "./globals";
 import fs from "fs";
 import path from "path";
 import { copyDirectory, copyFileAsync } from "./misc-functions";
@@ -25,6 +27,8 @@ export async function createAddonStructure(config: Lost.Config, pluginProperties
     copyFileAsync(iconPath, `${ADDON_FOLDER}/${config.Icon.FileName}`);
 
     createNewInstanceFile(config);
+
+    createNewDomSideFile(config);
     
     replaceConfigInAllFiles(config);
 
@@ -45,6 +49,14 @@ function createNewInstanceFile(config: Lost.Config) {
     const InstanceFile = fs.readFileSync(`${INSTANCE_PATH}`, 'utf8');
     NewInstanceFile = InstanceFile.replace(regex, `const Config = ${JSON.stringify(config)}`);
     fs.writeFileSync(`${FINAL_INSTANCE_PATH}`, NewInstanceFile);
+}
+
+function createNewDomSideFile(config: Lost.Config) {
+    let NewDomSideFile: string;
+    const regex = /import\s*{\s*Config\s*}\s*from\s*["']\.\.\/lost\.config\.js["'];/g;
+    const DomSideFile = fs.readFileSync(`${DOMSIDE_PATH}`, 'utf8');
+    NewDomSideFile = DomSideFile.replace(regex, `const Config = ${JSON.stringify(config)}`);
+    fs.writeFileSync(`${FINAL_DOMSIDE_PATH}`, NewDomSideFile);
 }
 
 function replaceConfigInAllFiles(config: Lost.Config) {

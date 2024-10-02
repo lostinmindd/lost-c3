@@ -2,6 +2,7 @@ import { exec } from 'child_process';
 import * as os from 'os';
 import * as fs from 'fs';
 import path from 'path';
+import { BUILD_FOLDER } from './globals';
 
 export function openUrl(url: string) {
     const platform = os.platform();
@@ -54,3 +55,7 @@ export function copyDirectory(sourceDir: string, destinationDir: string) {
         }
     }
 }
+// path.resolve(`${BUILD_FOLDER}`
+export async function removePreviousFolder(folderPath: fs.PathLike) {
+    fs.rm(folderPath, { recursive: true, force: true }, (err) => { if (!err) { return true } return false });
+};

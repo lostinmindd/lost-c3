@@ -21,6 +21,7 @@ export async function createAcesJSONFile(categories: Lost.Category[]) {
             aceAction.scriptName = action.Options.ScriptName;
             aceAction.highlight = (action.Options.Highlight) ? action.Options.Highlight : false;
             aceAction.isDeprecated = (action.Options.Deprecated) ? action.Options.Deprecated : false;
+            if (c.Options.Deprecated) aceAction.isDeprecated = true;
             aceAction.isAsync = (action.Options.IsAsync) ? action.Options.IsAsync : false;
             
             if (action.Params) {
@@ -33,7 +34,8 @@ export async function createAcesJSONFile(categories: Lost.Category[]) {
                     aceParam.id = param.Options.Id;
                     aceParam.type = param.Type;
 
-                    aceParam.initialValue = (param.Options.InitialValue) ? param.Options.InitialValue : "";
+                    aceParam.initialValue = (param.Options.InitialValue) ? param.Options.InitialValue : '""';
+                    if (param.Type === Lost.ParamType.NUMBER) aceParam.initialValue = '';
                     
                     if (param.Type === Lost.ParamType.STRING) {
                         const Options = (param.Options as Lost.StringParamOptions);
@@ -75,6 +77,7 @@ export async function createAcesJSONFile(categories: Lost.Category[]) {
             aceCondition.scriptName = condition.Options.ScriptName
             aceCondition.highlight = (condition.Options.Highlight) ? condition.Options.Highlight : false;
             aceCondition.isDeprecated = (condition.Options.Deprecated) ? condition.Options.Deprecated : false;
+            if (c.Options.Deprecated) aceCondition.isDeprecated = true;
             aceCondition.isTrigger = condition.Options.IsTrigger;
             aceCondition.isFakeTrigger = (condition.Options.IsFakeTrigger) ? condition.Options.IsFakeTrigger : false;
             aceCondition.isStatic = (condition.Options.IsStatic) ? condition.Options.IsStatic : false;
@@ -92,8 +95,9 @@ export async function createAcesJSONFile(categories: Lost.Category[]) {
                     aceParam.id = param.Options.Id;
                     aceParam.type = param.Type;
 
-                    aceParam.initialValue = (param.Options.InitialValue) ? param.Options.InitialValue : "";
-                    
+                    aceParam.initialValue = (param.Options.InitialValue) ? param.Options.InitialValue : '""';
+                    if (param.Type === Lost.ParamType.NUMBER) aceParam.initialValue = '';
+
                     if (param.Type === Lost.ParamType.STRING) {
                         const Options = (param.Options as Lost.StringParamOptions);
                         aceParam.autocompleteId = (Options.AutocompleteId) ? Options.AutocompleteId : false;
@@ -134,6 +138,7 @@ export async function createAcesJSONFile(categories: Lost.Category[]) {
             aceExpression.expressionName = expression.Options.ScriptName;
             aceExpression.highlight = (expression.Options.Highlight) ? expression.Options.Highlight : false;
             aceExpression.isDeprecated = (expression.Options.Deprecated) ? expression.Options.Deprecated : false;
+            if (c.Options.Deprecated) aceExpression.isDeprecated = true;
             aceExpression.returnType = expression.Options.ReturnType;
             aceExpression.isVariadicParameters = (expression.Options.IsVariadicParameters) ? expression.Options.IsVariadicParameters : false;
         
@@ -147,7 +152,8 @@ export async function createAcesJSONFile(categories: Lost.Category[]) {
                     aceParam.id = param.Options.Id;
                     aceParam.type = param.Type;
 
-                    aceParam.initialValue = (param.Options.InitialValue) ? param.Options.InitialValue : "";
+                    aceParam.initialValue = (param.Options.InitialValue) ? param.Options.InitialValue : '""';
+                    if (param.Type === Lost.ParamType.NUMBER) aceParam.initialValue = '';
                     
                     if (param.Type === Lost.ParamType.STRING) {
                         const Options = (param.Options as Lost.StringParamOptions);

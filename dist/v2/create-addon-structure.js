@@ -20,6 +20,7 @@ async function createAddonStructure(config, pluginProperties) {
     const iconPath = `${globals_1.SOURCE_FOLDER}/${config.Icon.FileName}`;
     (0, misc_functions_1.copyFileAsync)(iconPath, `${globals_1.ADDON_FOLDER}/${config.Icon.FileName}`);
     createNewInstanceFile(config);
+    createNewDomSideFile(config);
     replaceConfigInAllFiles(config);
     replacePluginProperties(pluginProperties);
     // Copy all user libraries to addon folder
@@ -34,6 +35,13 @@ function createNewInstanceFile(config) {
     const InstanceFile = fs_1.default.readFileSync(`${globals_1.INSTANCE_PATH}`, 'utf8');
     NewInstanceFile = InstanceFile.replace(regex, `const Config = ${JSON.stringify(config)}`);
     fs_1.default.writeFileSync(`${globals_1.FINAL_INSTANCE_PATH}`, NewInstanceFile);
+}
+function createNewDomSideFile(config) {
+    let NewDomSideFile;
+    const regex = /import\s*{\s*Config\s*}\s*from\s*["']\.\.\/lost\.config\.js["'];/g;
+    const DomSideFile = fs_1.default.readFileSync(`${globals_1.DOMSIDE_PATH}`, 'utf8');
+    NewDomSideFile = DomSideFile.replace(regex, `const Config = ${JSON.stringify(config)}`);
+    fs_1.default.writeFileSync(`${globals_1.FINAL_DOMSIDE_PATH}`, NewDomSideFile);
 }
 function replaceConfigInAllFiles(config) {
     const regex = /const\s+Config\s*=\s*{};/g; // Регулярное выражение для поиска `const Config = {};`

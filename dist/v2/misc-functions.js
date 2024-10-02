@@ -29,6 +29,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.openUrl = openUrl;
 exports.copyFileAsync = copyFileAsync;
 exports.copyDirectory = copyDirectory;
+exports.removePreviousFolder = removePreviousFolder;
 const child_process_1 = require("child_process");
 const os = __importStar(require("os"));
 const fs = __importStar(require("fs"));
@@ -75,3 +76,10 @@ function copyDirectory(sourceDir, destinationDir) {
         }
     }
 }
+// path.resolve(`${BUILD_FOLDER}`
+async function removePreviousFolder(folderPath) {
+    fs.rm(folderPath, { recursive: true, force: true }, (err) => { if (!err) {
+        return true;
+    } return false; });
+}
+;

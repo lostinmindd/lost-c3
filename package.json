@@ -1,6 +1,6 @@
 {
   "name": "lost-c3-cli",
-  "version": "3.0.52",
+  "version": "3.1.0",
   "keywords": [
     "construct 3",
     "addon sdk",
@@ -26,7 +26,7 @@
     "express": "^4.21.0",
     "fs-extra": "^11.2.0",
     "jsdom": "^25.0.1",
-    "lost-c3-lib": "^2.0.0",
+    "lost-c3-lib": "^2.0.8",
     "module-alias": "^2.2.3",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",

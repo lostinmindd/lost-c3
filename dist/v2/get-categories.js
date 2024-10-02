@@ -22,6 +22,9 @@ async function processDirectory(directory) {
     for (const file of files) {
         const filePath = path_1.default.join(directory, file);
         const stats = fs_1.default.statSync(filePath);
+        if (stats.isDirectory()) {
+            processDirectory(filePath);
+        }
         if (stats.isFile() && path_1.default.extname(file) === '.js') {
             await processFile(filePath);
         }

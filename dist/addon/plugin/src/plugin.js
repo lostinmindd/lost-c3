@@ -33,6 +33,7 @@ const PLUGIN_CLASS = SDK.Plugins[Config.AddonId] = class LPlugin extends SDK.IPl
         this._info.SetCanBeBundled(Config.CanBeBundled || true);
         this._info.SetIsSingleGlobal(Config.IsSingleGlobal || false);
         SDK.Lang.PushContext(".properties");
+        this._info.SetDOMSideScripts(["c3runtime/domSide.js"]);
         if (Config.Scripts) {
             Config.Scripts.forEach(script => {
                 if (script.Type === 'external-dom-script') {

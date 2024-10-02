@@ -40,7 +40,7 @@ const v2_1 = require("./v2");
 /**
  * Build addon
  */
-(0, yargs_1.default)((0, helpers_1.hideBin)(process.argv)).command('build', 'Build addon', () => { }, () => {
+(0, yargs_1.default)((0, helpers_1.hideBin)(process.argv)).command('build', 'Build addon', () => { }, async () => {
     (0, console_log_colors_1.log)('\n' + (0, console_log_colors_1.bgBlack)((0, console_log_colors_1.blueBright)('Start building addon...')) + '\n', 'white');
     (0, v2_1.build)().then(() => {
         (0, console_log_colors_1.log)('\n' + `${(0, console_log_colors_1.bgBlack)((0, console_log_colors_1.greenBright)('Addon was built successfully!'))}`, 'bold');

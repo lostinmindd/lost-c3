@@ -7,7 +7,7 @@ export async function addAllEntitiesToFiles(categories: Lost.Category[]) {
     let allActions: any = {};
     let allConditions: any = {};
     let allExpressions: any = {};
-
+    // console.log(categories);
     categories.forEach(c => {
         c.Actions.forEach(a => {
             allActions[a.Options.ScriptName] = a.Options.Script;

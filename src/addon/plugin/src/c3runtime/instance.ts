@@ -6,7 +6,7 @@ const Config: Lost.Config = {} as Lost.Config;
 class LInstance extends globalThis.ISDKInstanceBase {
 
 	constructor() {
-		super();
+		super({ domComponentId: Config.AddonId });
 	}
 	
 	_release() {

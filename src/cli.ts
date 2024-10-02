@@ -40,7 +40,7 @@ yargs(hideBin(process.argv)).command('init', 'Initialize lost addon file structu
 /**
  * Build addon
  */
-yargs(hideBin(process.argv)).command('build', 'Build addon', () => {}, () => {
+yargs(hideBin(process.argv)).command('build', 'Build addon', () => {}, async () => {
     log('\n' + bgBlack(blueBright('Start building addon...')) + '\n', 'white');
     
     build().then(() => {

@@ -22,6 +22,6 @@
     "nodemon": "^3.1.7"
   },
   "dependencies": {
-    "lost-c3-lib": "^2.0.0"
+    "lost-c3-lib": "^2.0.8"
   }
 }
