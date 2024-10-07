@@ -1,7 +1,7 @@
-import type { Lost } from "lost-c3-lib";
+import type { PluginConfig } from "lost-c3-lib";
 const C3 = globalThis.C3;
 
-const Config: Lost.Config = {} as Lost.Config;
+const Config = {} as PluginConfig;
 
 class LInstance extends globalThis.ISDKInstanceBase {
 
@@ -18,5 +18,3 @@ class LInstance extends globalThis.ISDKInstanceBase {
 C3.Plugins[Config.AddonId].Instance = LInstance;
 
 export type { LInstance as SDKInstanceClass };
-
-// export {};

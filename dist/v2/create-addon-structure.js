@@ -10,19 +10,21 @@ const path_1 = __importDefault(require("path"));
 const misc_functions_1 = require("./misc-functions");
 const remove_export_injs_1 = require("./remove-export-injs");
 async function createAddonStructure(config, pluginProperties) {
+    let BONES_FOLDER_PATH = globals_1.PLUGIN_BONES_FOLDER_PATH;
+    if (config.Type === 'behavior')
+        BONES_FOLDER_PATH = globals_1.BEHAVIOR_BONES_FOLDER_PATH;
     fs_1.default.mkdirSync(globals_1.ADDON_FOLDER, { recursive: true });
     fs_1.default.mkdirSync(`${globals_1.ADDON_FOLDER}/lang`, { recursive: true });
     fs_1.default.mkdirSync(`${globals_1.ADDON_FOLDER}/libs`, { recursive: true });
     fs_1.default.mkdirSync(`${globals_1.ADDON_FOLDER}/files`, { recursive: true });
-    (0, misc_functions_1.copyDirectory)(`${globals_1.PLUGIN_BONES_FOLDER_PATH}`, `build/addon`);
+    (0, misc_functions_1.copyDirectory)(`${BONES_FOLDER_PATH}`, `build/addon`);
     (0, remove_export_injs_1.removeExportInJS)();
     // Copy plugin icon (svg / png);
     const iconPath = `${globals_1.SOURCE_FOLDER}/${config.Icon.FileName}`;
     (0, misc_functions_1.copyFileAsync)(iconPath, `${globals_1.ADDON_FOLDER}/${config.Icon.FileName}`);
     createNewInstanceFile(config);
-    // createNewDomSideFile(config);
     replaceConfigInAllFiles(config);
-    replacePluginProperties(pluginProperties);
+    replacePluginProperties(config, pluginProperties);
     // Copy all user libraries to addon folder
     (0, misc_functions_1.copyDirectory)(`${globals_1.LIBRARIES_FOLDER_PATH}`, `${globals_1.FINAL_LIBRARIES_FOLDER_PATH}`);
     // Copy all user files to addon folder
@@ -35,13 +37,6 @@ function createNewInstanceFile(config) {
     const InstanceFile = fs_1.default.readFileSync(`${globals_1.INSTANCE_PATH}`, 'utf8');
     NewInstanceFile = InstanceFile.replace(regex, `const Config = ${JSON.stringify(config)}`);
     fs_1.default.writeFileSync(`${globals_1.FINAL_INSTANCE_PATH}`, NewInstanceFile);
-}
-function createNewDomSideFile(config) {
-    let NewDomSideFile;
-    const regex = /import\s*{\s*Config\s*}\s*from\s*["']\.\.\/lost\.config\.js["'];/g;
-    const DomSideFile = fs_1.default.readFileSync(`${globals_1.DOMSIDE_PATH}`, 'utf8');
-    NewDomSideFile = DomSideFile.replace(regex, `const Config = ${JSON.stringify(config)}`);
-    fs_1.default.writeFileSync(`${globals_1.FINAL_DOMSIDE_PATH}`, NewDomSideFile);
 }
 function replaceConfigInAllFiles(config) {
     const regex = /const\s+Config\s*=\s*{};/g; // Регулярное выражение для поиска `const Config = {};`
@@ -66,11 +61,11 @@ function replaceConfigInAllFiles(config) {
     }
     processDirectory(`${globals_1.ADDON_FOLDER}`);
 }
-function replacePluginProperties(pluginProperties) {
+function replacePluginProperties(config, pluginProperties) {
     const regex = /const\s+PluginProperties\s*=\s*\[\s*\];/g; // Регулярное выражение для поиска `const PluginProperties = [];`
-    const fileContent = fs_1.default.readFileSync(`${globals_1.MAIN_PLUGIN_JS_PATH}`, 'utf8');
+    const fileContent = fs_1.default.readFileSync(`${(config.Type === 'behavior') ? globals_1.MAIN_BEHAVIOR_JS_PATH : globals_1.MAIN_PLUGIN_JS_PATH}`, 'utf8');
     if (regex.test(fileContent)) {
         const updatedContent = fileContent.replace(regex, `const PluginProperties = ${JSON.stringify(pluginProperties)};`);
-        fs_1.default.writeFileSync(`${globals_1.MAIN_PLUGIN_JS_PATH}`, updatedContent, 'utf8');
+        fs_1.default.writeFileSync(`${(config.Type === 'behavior') ? globals_1.MAIN_BEHAVIOR_JS_PATH : globals_1.MAIN_PLUGIN_JS_PATH}`, updatedContent, 'utf8');
     }
 }

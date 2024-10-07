@@ -1,9 +1,9 @@
-import { Lost } from 'lost-c3-lib';
+import { LostCategory } from 'lost-c3-lib';
 import { CATEGORIES_FOLDER_PATH } from './globals';
 import fs from 'fs';
 import path from 'path';
 
-const categories: Lost.Category[] = [];
+const categories: LostCategory[] = [];
 
 export async function getCategories() {
     await processDirectory(CATEGORIES_FOLDER_PATH);
@@ -13,7 +13,7 @@ export async function getCategories() {
 async function processFile(filePath: string) {
 
     const module = await import(`file://${filePath}`);
-    const Category = module.Category as Lost.Category;
+    const Category = module.Category as LostCategory;
     categories.push(Category);
 }
 

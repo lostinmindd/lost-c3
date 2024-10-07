@@ -1,6 +1,6 @@
-import { Lost, IntegerProperty, TextProperty, LongTextProperty } from "lost-c3-lib"; 
+import { IntegerProperty, TextProperty, LongTextProperty, PluginProperty } from "lost-c3-lib"; 
 
-const PluginProperties: Lost.PluginProperty[] = [
+const PluginProperties: PluginProperty[] = [
     new IntegerProperty({
         Id: 'lostPluginProperty',
         Name: 'Lost Plugin Property',

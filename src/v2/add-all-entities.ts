@@ -1,8 +1,8 @@
-import { Lost } from "lost-c3-lib";
+import { LostCategory } from "lost-c3-lib";
 import { ACTIONS_PATH, CONDITIONS_PATH, EXPRESSIONS_PATH } from "./globals";
 import * as fs from 'fs';
 
-export async function addAllEntitiesToFiles(categories: Lost.Category[]) {
+export async function addAllEntitiesToFiles(categories: LostCategory[]) {
 
     let allActions: any = {};
     let allConditions: any = {};

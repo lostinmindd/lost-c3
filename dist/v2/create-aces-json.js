@@ -20,7 +20,7 @@ async function createAcesJSONFile(categories) {
             aceAction.scriptName = action.Options.ScriptName;
             aceAction.highlight = (action.Options.Highlight) ? action.Options.Highlight : false;
             aceAction.isDeprecated = (action.Options.Deprecated) ? action.Options.Deprecated : false;
-            if (c.Options.Deprecated)
+            if (c.Deprecated)
                 aceAction.isDeprecated = true;
             aceAction.isAsync = (action.Options.IsAsync) ? action.Options.IsAsync : false;
             if (action.Params) {
@@ -30,13 +30,13 @@ async function createAcesJSONFile(categories) {
                     aceParam.id = param.Options.Id;
                     aceParam.type = param.Type;
                     aceParam.initialValue = (param.Options.InitialValue) ? param.Options.InitialValue : '""';
-                    if (param.Type === "number" /* Lost.ParamType.NUMBER */)
+                    if (param.Type === "number" /* ParamType.NUMBER */)
                         aceParam.initialValue = '';
-                    if (param.Type === "string" /* Lost.ParamType.STRING */) {
+                    if (param.Type === "string" /* ParamType.STRING */) {
                         const Options = param.Options;
                         aceParam.autocompleteId = (Options.AutocompleteId) ? Options.AutocompleteId : false;
                     }
-                    if (param.Type === "combo" /* Lost.ParamType.COMBO */) {
+                    if (param.Type === "combo" /* ParamType.COMBO */) {
                         const Options = param.Options;
                         let items = [];
                         Options.Items.forEach((item) => {
@@ -49,7 +49,7 @@ async function createAcesJSONFile(categories) {
                         if (items.indexOf(aceParam.initialValue) === -1)
                             aceParam.initialValue = items[0];
                     }
-                    if (param.Type === "object" /* Lost.ParamType.OBJECT */) {
+                    if (param.Type === "object" /* ParamType.OBJECT */) {
                         const Options = param.Options;
                         if (Options.AllowedPluginIds)
                             aceParam.allowedPluginIds = Options.AllowedPluginIds;
@@ -65,7 +65,7 @@ async function createAcesJSONFile(categories) {
             aceCondition.scriptName = condition.Options.ScriptName;
             aceCondition.highlight = (condition.Options.Highlight) ? condition.Options.Highlight : false;
             aceCondition.isDeprecated = (condition.Options.Deprecated) ? condition.Options.Deprecated : false;
-            if (c.Options.Deprecated)
+            if (c.Deprecated)
                 aceCondition.isDeprecated = true;
             aceCondition.isTrigger = condition.Options.IsTrigger;
             aceCondition.isFakeTrigger = (condition.Options.IsFakeTrigger) ? condition.Options.IsFakeTrigger : false;
@@ -80,13 +80,13 @@ async function createAcesJSONFile(categories) {
                     aceParam.id = param.Options.Id;
                     aceParam.type = param.Type;
                     aceParam.initialValue = (param.Options.InitialValue) ? param.Options.InitialValue : '""';
-                    if (param.Type === "number" /* Lost.ParamType.NUMBER */)
+                    if (param.Type === "number" /* ParamType.NUMBER */)
                         aceParam.initialValue = '';
-                    if (param.Type === "string" /* Lost.ParamType.STRING */) {
+                    if (param.Type === "string" /* ParamType.STRING */) {
                         const Options = param.Options;
                         aceParam.autocompleteId = (Options.AutocompleteId) ? Options.AutocompleteId : false;
                     }
-                    if (param.Type === "combo" /* Lost.ParamType.COMBO */) {
+                    if (param.Type === "combo" /* ParamType.COMBO */) {
                         const Options = param.Options;
                         let items = [];
                         Options.Items.forEach((item) => {
@@ -99,7 +99,7 @@ async function createAcesJSONFile(categories) {
                         if (items.indexOf(aceParam.initialValue) === -1)
                             aceParam.initialValue = items[0];
                     }
-                    if (param.Type === "object" /* Lost.ParamType.OBJECT */) {
+                    if (param.Type === "object" /* ParamType.OBJECT */) {
                         const Options = param.Options;
                         if (Options.AllowedPluginIds)
                             aceParam.allowedPluginIds = Options.AllowedPluginIds;
@@ -115,7 +115,7 @@ async function createAcesJSONFile(categories) {
             aceExpression.expressionName = expression.Options.ScriptName;
             aceExpression.highlight = (expression.Options.Highlight) ? expression.Options.Highlight : false;
             aceExpression.isDeprecated = (expression.Options.Deprecated) ? expression.Options.Deprecated : false;
-            if (c.Options.Deprecated)
+            if (c.Deprecated)
                 aceExpression.isDeprecated = true;
             aceExpression.returnType = expression.Options.ReturnType;
             aceExpression.isVariadicParameters = (expression.Options.IsVariadicParameters) ? expression.Options.IsVariadicParameters : false;
@@ -126,9 +126,9 @@ async function createAcesJSONFile(categories) {
                     aceParam.id = param.Options.Id;
                     aceParam.type = param.Type;
                     aceParam.initialValue = (param.Options.InitialValue) ? param.Options.InitialValue : '""';
-                    if (param.Type === "number" /* Lost.ParamType.NUMBER */)
+                    if (param.Type === "number" /* ParamType.NUMBER */)
                         aceParam.initialValue = '';
-                    if (param.Type === "string" /* Lost.ParamType.STRING */) {
+                    if (param.Type === "string" /* ParamType.STRING */) {
                         const Options = param.Options;
                         aceParam.autocompleteId = (Options.AutocompleteId) ? Options.AutocompleteId : false;
                     }

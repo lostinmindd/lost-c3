@@ -1,0 +1,31 @@
+
+{
+	"compilerOptions": {
+		/* Visit https://aka.ms/tsconfig to read more about this file */
+
+		/* Transpile away class fields, as Closure Compiler doesn't support them yet */
+		"target": "ESNext", 
+
+		/* Use modern standard JavaScript (ES) Modules */
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
+		/* Disable polyfill code for CommonJS modules - Construct always uses ES Modules */
+		"esModuleInterop": true,
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		/* Other standard settings specified by tsc --init */
+		"forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */
+		"strict": true,
+		"rootDir": "./src",
+		"skipLibCheck": true,
+		"baseUrl": "./src",
+		"paths": {
+			"@PluginProperties": ["./plugin.properties.ts"],
+			"@Config": ["./lost.config.ts"],
+			"@Instance": ["./addon/Instance.ts"]
+		}
+
+	},
+	"include": ["src/**/*", "build/lost/addon/categories/Main.js"],
+	"exclude": ["node_modules", "build"]
+}

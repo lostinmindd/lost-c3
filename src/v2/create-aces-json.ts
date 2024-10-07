@@ -1,9 +1,9 @@
-import { Lost } from 'lost-c3-lib';
+import { LostCategory, AcesJSON, AceAction, AceParam, ParamType, StringParamOptions, ComboParamOptions, ComboItem, ObjectParamOptions, AceCondition, AceExpression } from 'lost-c3-lib';
 import { ADDON_PATH } from './globals';
 import fs from 'fs';
 
-export async function createAcesJSONFile(categories: Lost.Category[]) {
-    let AcesJSON = {} as Lost.AcesJSON;
+export async function createAcesJSONFile(categories: LostCategory[]) {
+    let AcesJSON = {} as AcesJSON;
 
     categories.forEach(c => {
 
@@ -15,13 +15,13 @@ export async function createAcesJSONFile(categories: Lost.Category[]) {
 
         c.Actions.forEach(action => {
 
-            let aceAction = {} as Lost.AceAction;
+            let aceAction = {} as AceAction;
 
             aceAction.id = action.Id;
             aceAction.scriptName = action.Options.ScriptName;
             aceAction.highlight = (action.Options.Highlight) ? action.Options.Highlight : false;
             aceAction.isDeprecated = (action.Options.Deprecated) ? action.Options.Deprecated : false;
-            if (c.Options.Deprecated) aceAction.isDeprecated = true;
+            if (c.Deprecated) aceAction.isDeprecated = true;
             aceAction.isAsync = (action.Options.IsAsync) ? action.Options.IsAsync : false;
             
             if (action.Params) {
@@ -29,23 +29,23 @@ export async function createAcesJSONFile(categories: Lost.Category[]) {
                 aceAction["params"] = [];
 
                 action.Params.forEach(param => {
-                    let aceParam = {} as Lost.AceParam;
+                    let aceParam = {} as AceParam;
 
                     aceParam.id = param.Options.Id;
                     aceParam.type = param.Type;
 
                     aceParam.initialValue = (param.Options.InitialValue) ? param.Options.InitialValue : '""';
-                    if (param.Type === Lost.ParamType.NUMBER) aceParam.initialValue = '';
+                    if (param.Type === ParamType.NUMBER) aceParam.initialValue = '';
                     
-                    if (param.Type === Lost.ParamType.STRING) {
-                        const Options = (param.Options as Lost.StringParamOptions);
+                    if (param.Type === ParamType.STRING) {
+                        const Options = (param.Options as StringParamOptions);
                         aceParam.autocompleteId = (Options.AutocompleteId) ? Options.AutocompleteId : false;
                     }
-                    if (param.Type === Lost.ParamType.COMBO) {
-                        const Options = (param.Options as Lost.ComboParamOptions);
+                    if (param.Type === ParamType.COMBO) {
+                        const Options = (param.Options as ComboParamOptions);
                         let items: string[] = [];
 
-                        Options.Items.forEach((item: Lost.ComboItem) => {
+                        Options.Items.forEach((item: ComboItem) => {
                             items.push(item.Id);
                         })
                         aceParam.items = items;
@@ -54,8 +54,8 @@ export async function createAcesJSONFile(categories: Lost.Category[]) {
                          */
                         if (items.indexOf(aceParam.initialValue) === -1) aceParam.initialValue = items[0];
                     }
-                    if (param.Type === Lost.ParamType.OBJECT) {
-                        const Options = (param.Options as Lost.ObjectParamOptions);
+                    if (param.Type === ParamType.OBJECT) {
+                        const Options = (param.Options as ObjectParamOptions);
                         if (Options.AllowedPluginIds) aceParam.allowedPluginIds = Options.AllowedPluginIds;
                     }
 
@@ -71,13 +71,13 @@ export async function createAcesJSONFile(categories: Lost.Category[]) {
 
         c.Conditions.forEach(condition => {
 
-            let aceCondition = {} as Lost.AceCondition;
+            let aceCondition = {} as AceCondition;
 
             aceCondition.id = condition.Id;
             aceCondition.scriptName = condition.Options.ScriptName
             aceCondition.highlight = (condition.Options.Highlight) ? condition.Options.Highlight : false;
             aceCondition.isDeprecated = (condition.Options.Deprecated) ? condition.Options.Deprecated : false;
-            if (c.Options.Deprecated) aceCondition.isDeprecated = true;
+            if (c.Deprecated) aceCondition.isDeprecated = true;
             aceCondition.isTrigger = condition.Options.IsTrigger;
             aceCondition.isFakeTrigger = (condition.Options.IsFakeTrigger) ? condition.Options.IsFakeTrigger : false;
             aceCondition.isStatic = (condition.Options.IsStatic) ? condition.Options.IsStatic : false;
@@ -90,23 +90,23 @@ export async function createAcesJSONFile(categories: Lost.Category[]) {
                 aceCondition["params"] = [];
 
                 condition.Params.forEach(param => {
-                    let aceParam = {} as Lost.AceParam;
+                    let aceParam = {} as AceParam;
 
                     aceParam.id = param.Options.Id;
                     aceParam.type = param.Type;
 
                     aceParam.initialValue = (param.Options.InitialValue) ? param.Options.InitialValue : '""';
-                    if (param.Type === Lost.ParamType.NUMBER) aceParam.initialValue = '';
+                    if (param.Type === ParamType.NUMBER) aceParam.initialValue = '';
 
-                    if (param.Type === Lost.ParamType.STRING) {
-                        const Options = (param.Options as Lost.StringParamOptions);
+                    if (param.Type === ParamType.STRING) {
+                        const Options = (param.Options as StringParamOptions);
                         aceParam.autocompleteId = (Options.AutocompleteId) ? Options.AutocompleteId : false;
                     }
-                    if (param.Type === Lost.ParamType.COMBO) {
-                        const Options = (param.Options as Lost.ComboParamOptions);
+                    if (param.Type === ParamType.COMBO) {
+                        const Options = (param.Options as ComboParamOptions);
                         let items: string[] = [];
 
-                        Options.Items.forEach((item: Lost.ComboItem) => {
+                        Options.Items.forEach((item: ComboItem) => {
                             items.push(item.Id);
                         })
                         aceParam.items = items;
@@ -115,8 +115,8 @@ export async function createAcesJSONFile(categories: Lost.Category[]) {
                          */
                         if (items.indexOf(aceParam.initialValue) === -1) aceParam.initialValue = items[0];
                     }
-                    if (param.Type === Lost.ParamType.OBJECT) {
-                        const Options = (param.Options as Lost.ObjectParamOptions);
+                    if (param.Type === ParamType.OBJECT) {
+                        const Options = (param.Options as ObjectParamOptions);
                         if (Options.AllowedPluginIds) aceParam.allowedPluginIds = Options.AllowedPluginIds;
                     }
 
@@ -132,13 +132,13 @@ export async function createAcesJSONFile(categories: Lost.Category[]) {
 
         c.Expressions.forEach(expression => {
 
-            let aceExpression = {} as Lost.AceExpression;
+            let aceExpression = {} as AceExpression;
 
             aceExpression.id = expression.Id;
             aceExpression.expressionName = expression.Options.ScriptName;
             aceExpression.highlight = (expression.Options.Highlight) ? expression.Options.Highlight : false;
             aceExpression.isDeprecated = (expression.Options.Deprecated) ? expression.Options.Deprecated : false;
-            if (c.Options.Deprecated) aceExpression.isDeprecated = true;
+            if (c.Deprecated) aceExpression.isDeprecated = true;
             aceExpression.returnType = expression.Options.ReturnType;
             aceExpression.isVariadicParameters = (expression.Options.IsVariadicParameters) ? expression.Options.IsVariadicParameters : false;
         
@@ -147,16 +147,16 @@ export async function createAcesJSONFile(categories: Lost.Category[]) {
                 aceExpression["params"] = [];
 
                 expression.Params.forEach(param => {
-                    let aceParam = {} as Lost.AceParam;
+                    let aceParam = {} as AceParam;
 
                     aceParam.id = param.Options.Id;
                     aceParam.type = param.Type;
 
                     aceParam.initialValue = (param.Options.InitialValue) ? param.Options.InitialValue : '""';
-                    if (param.Type === Lost.ParamType.NUMBER) aceParam.initialValue = '';
+                    if (param.Type === ParamType.NUMBER) aceParam.initialValue = '';
                     
-                    if (param.Type === Lost.ParamType.STRING) {
-                        const Options = (param.Options as Lost.StringParamOptions);
+                    if (param.Type === ParamType.STRING) {
+                        const Options = (param.Options as StringParamOptions);
                         aceParam.autocompleteId = (Options.AutocompleteId) ? Options.AutocompleteId : false;
                     }
 

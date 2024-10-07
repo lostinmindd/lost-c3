@@ -10,7 +10,7 @@ import { createAcesJSONFile } from "./create-aces-json";
 import { createLanguageJSONFile } from "./create-language-json";
 import { addAllEntitiesToFiles } from "./add-all-entities";
 import { zipAddon } from "./zip-addon";
-import { bold, gray, log, magenta, red, yellow } from "console-log-colors";
+import { bold, gray, log, magenta, red, redBright, yellow } from "console-log-colors";
 import { removePreviousFolder } from "./misc-functions";
 
 export async function build() {
@@ -21,11 +21,11 @@ export async function build() {
     log(`Getting Lost config...`, 'white');
     const Config = await getConfig();
 
-    log(`Getting plugin properties...`, 'white');
+    log(`Getting plugin ${red('properties')}...`, 'white');
     const PluginProperties = await getPluginProperties();
     log(`Total properties: ${PluginProperties.length}`, 'white');
 
-    log(`Getting plugin categories...\n`, 'white');
+    log(`Getting plugin ${redBright('categories')}...\n`, 'white');
     let Categories = await getCategories();
     log(`--------------------\n`, 'white');
     const ids: string[] = [];
@@ -33,7 +33,7 @@ export async function build() {
         const actionsCount = category.Actions.length;
         const conditionsCount = category.Conditions.length;
         const expressionsCount = category.Expressions.length;
-        if (category.Options.InDevelopment) {
+        if (category.InDevelopment) {
             log(`${yellow(`[${index + 1}]`)} Dev (${bold(gray(category.Name))}), Actions: ${yellow(actionsCount)}, Conditions: ${yellow(conditionsCount)}, Expressions: ${yellow(expressionsCount)}`, 'blackBG');
         } else log(`${yellow(`[${index + 1}]`)} (${bold(gray(category.Name))}), Actions: ${yellow(actionsCount)}, Conditions: ${yellow(conditionsCount)}, Expressions: ${yellow(expressionsCount)}`, 'blackBG');
         
@@ -44,7 +44,7 @@ export async function build() {
     });
     log(`\n--------------------\n`, 'white');
 
-    Categories = Categories.filter(category => category.Options.InDevelopment === false);
+    Categories = Categories.filter(category => category.InDevelopment === false);
 
     log(`Creating addon structure..`, 'white');
     await createAddonStructure(Config, PluginProperties);

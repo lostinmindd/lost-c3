@@ -1,8 +1,8 @@
-import type { Lost } from "lost-c3-lib";
+import type { PluginConfig } from "lost-c3-lib";
 
 const SDK = globalThis.SDK;
 
-const Config: Lost.Config = {} as Lost.Config;
+const Config = {} as PluginConfig;
 
 const PLUGIN_CLASS = SDK.Plugins[Config.AddonId];
 

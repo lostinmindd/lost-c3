@@ -1,6 +1,6 @@
-import { Lost } from "lost-c3-lib";
+import { PluginConfig } from "lost-c3-lib";
 
-const Config: Lost.Config = {
+const Config: PluginConfig = {
     /**
      * Common
      */
@@ -15,7 +15,7 @@ const Config: Lost.Config = {
      */
     AddonId: "addon_id",
     Type: "plugin",
-    AddonCategory: "general",
+    PluginCategory: "general",
     AddonName: "My First Lost Addon",
     AddonDescription: "My first lost addon is awesome!",
     Version: "1.0.0.0",

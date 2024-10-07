@@ -1,15 +1,20 @@
-import { Lost } from 'lost-c3-lib';
+import { 
+    PluginConfig, BehaviorConfig, LostCategory, PluginProperty, 
+    type LanguagePluginProperty, type LanguageJSON, ComboPropertyOptions,
+    PluginPropertyType, ComboItem, LanguageAction, ComboParamOptions,
+    ParamType, LanguageCondition, LanguageExpression
+} from 'lost-c3-lib';
 import { ADDON_PATH } from './globals';
 import fs from 'fs';
 
-export async function createLanguageJSONFile(config: Lost.Config, categories: Lost.Category[], pluginProperties: Lost.PluginProperty[]) {
+export async function createLanguageJSONFile(config: PluginConfig | BehaviorConfig, categories: LostCategory[], pluginProperties: PluginProperty[]) {
     const PLUGIN_ID = (config.AddonId).toLowerCase();
-
+    const ADDON_TYPE = `${config.Type}s`
     let LanguageJSON = {
         "languageTag": "en-US",
         "fileDescription": `Strings for ${config.AddonName} addon.`,
         "text": {
-            "plugins": {
+            [ADDON_TYPE]: {
                 [PLUGIN_ID]: {
                     "name": config.ObjectName,
                     "description": config.AddonDescription,
@@ -22,33 +27,33 @@ export async function createLanguageJSONFile(config: Lost.Config, categories: Lo
                 }
             }
         }
-    } as Lost.LanguageJSON;
+    } as LanguageJSON;
 
     pluginProperties.forEach(p => {
-        let langProperty = {} as Lost.LanguagePluginProperty;
+        let langProperty = {} as LanguagePluginProperty;
 
         langProperty.name = p.Options.Name;
         langProperty.desc = (p.Options.Description) ? p.Options.Description : "";
 
-        if (p.Type === Lost.PluginPropertyType.COMBO) {
-            const Options = p.Options as Lost.ComboPropertyOptions;
+        if (p.Type === PluginPropertyType.COMBO) {
+            const Options = p.Options as ComboPropertyOptions;
             langProperty["items"] = {};
 
-            Options.Items.forEach((item: Lost.ComboItem) => {
+            Options.Items.forEach((item: ComboItem) => {
                 if (langProperty["items"]) langProperty["items"][item.Id] = item.Name;
             })
         }
 
-        LanguageJSON.text.plugins[PLUGIN_ID].properties[p.Options.Id] = langProperty;
+        LanguageJSON["text"][ADDON_TYPE][PLUGIN_ID].properties[p.Options.Id] = langProperty;
     })
 
     categories.forEach(c => {
 
-        LanguageJSON.text.plugins[PLUGIN_ID].aceCategories[c.Id] = c.Name;
+        LanguageJSON["text"][ADDON_TYPE][PLUGIN_ID].aceCategories[c.Id] = c.Name;
 
         c.Actions.forEach(action => {
 
-            let languageAction = {} as Lost.LanguageAction;
+            let languageAction = {} as LanguageAction;
 
             languageAction["list-name"] = action.Name;
             languageAction["display-text"] = action.DisplayText;
@@ -65,11 +70,11 @@ export async function createLanguageJSONFile(config: Lost.Config, categories: Lo
                         "desc": (param.Options.Description) ? param.Options.Description : ""
                     }
                     
-                    if (param.Type === Lost.ParamType.COMBO) {
-                        const Options = param.Options as Lost.ComboParamOptions;
+                    if (param.Type === ParamType.COMBO) {
+                        const Options = param.Options as ComboParamOptions;
                         params[Options.Id]["items"] = {};
 
-                        Options.Items.forEach((item: Lost.ComboItem) => {
+                        Options.Items.forEach((item: ComboItem) => {
                             if (params[`${Options.Id}`]["items"]) params[`${Options.Id}`]["items"][item.Id] = item.Name;
                         })
                     }
@@ -80,13 +85,13 @@ export async function createLanguageJSONFile(config: Lost.Config, categories: Lo
 
             }
 
-            LanguageJSON["text"]["plugins"][PLUGIN_ID].actions[action.Id] = languageAction;
+            LanguageJSON["text"][ADDON_TYPE][PLUGIN_ID].actions[action.Id] = languageAction;
 
         })
 
         c.Conditions.forEach(condition => {
 
-            let languageCondition = {} as Lost.LanguageCondition;
+            let languageCondition = {} as LanguageCondition;
 
             languageCondition["list-name"] = condition.Name;
             languageCondition["display-text"] = condition.DisplayText;
@@ -103,11 +108,11 @@ export async function createLanguageJSONFile(config: Lost.Config, categories: Lo
                         "desc": (param.Options.Description) ? param.Options.Description : ""
                     }
                     
-                    if (param.Type === Lost.ParamType.COMBO) {
-                        const Options = param.Options as Lost.ComboParamOptions;
+                    if (param.Type === ParamType.COMBO) {
+                        const Options = param.Options as ComboParamOptions;
                         params[Options.Id]["items"] = {};
 
-                        Options.Items.forEach((item: Lost.ComboItem) => {
+                        Options.Items.forEach((item: ComboItem) => {
                             if (params[`${Options.Id}`]["items"]) params[`${Options.Id}`]["items"][item.Id] = item.Name;
                         })
                     }
@@ -118,13 +123,13 @@ export async function createLanguageJSONFile(config: Lost.Config, categories: Lo
 
             }
 
-            LanguageJSON["text"]["plugins"][PLUGIN_ID].conditions[condition.Id] = languageCondition;
+            LanguageJSON["text"][ADDON_TYPE][PLUGIN_ID].conditions[condition.Id] = languageCondition;
 
         })
 
         c.Expressions.forEach(expression => {
 
-            let languageExpression = {} as Lost.LanguageExpression;
+            let languageExpression = {} as LanguageExpression;
 
             languageExpression["translated-name"] = expression.DisplayText;
             languageExpression["description"] = (expression.Description) ? expression.Description : "";
@@ -145,7 +150,7 @@ export async function createLanguageJSONFile(config: Lost.Config, categories: Lo
                 languageExpression["params"] = params;
             }
 
-            LanguageJSON["text"]["plugins"][PLUGIN_ID].expressions[expression.Id] = languageExpression;
+            LanguageJSON["text"][ADDON_TYPE][PLUGIN_ID].expressions[expression.Id] = languageExpression;
 
         })
 

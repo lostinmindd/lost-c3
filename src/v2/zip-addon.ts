@@ -1,10 +1,10 @@
-import { Lost } from "lost-c3-lib";
+import { PluginConfig, BehaviorConfig } from "lost-c3-lib";
 import { ADDON_FOLDER } from "./globals";
 import fs from 'fs-extra';
 import path from 'path';
 import archiver from 'archiver';
 
-export async function zipAddon(config: Lost.Config) {
+export async function zipAddon(config: PluginConfig | BehaviorConfig) {
     const sourceDirectory = path.resolve(`${ADDON_FOLDER}`);
 
     const fileName = `${config.AddonId}_${config.Version}`;

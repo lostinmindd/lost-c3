@@ -1,12 +1,10 @@
-import { Lost, Action, Condition, Expression, StringParam, NumberParam, AnyParam, ComboParam } from 'lost-c3-lib';
+import { LostCategory, Action, Condition, Expression } from 'lost-c3-lib';
 import type { Instance } from '@Instance';
 
-class MyCategory extends Lost.Category {
+class MyCategory extends LostCategory {
 
     constructor() {
-        super('myCategory', 'My Category', {
-            Deprecated: false, InDevelopment: false
-        });
+        super({Id: 'myCategory', Name: 'My Category', Deprecated: false, InDevelopment: false});
     };
 
     /**

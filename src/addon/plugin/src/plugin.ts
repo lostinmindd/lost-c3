@@ -1,4 +1,10 @@
-import type { Lost } from "lost-c3-lib";
+import type { 
+    CheckPropertyOptions, ColorPropertyOptions, ComboPropertyOptions, 
+    ExternalDomScript, FloatPropertyOptions, FontPropertyOptions, 
+    IntegerPropertyOptions, LongTextPropertyOptions, ObjectPropertyOptions, 
+    PercentPropertyOptions, PluginConfig, PluginProperty, 
+    TextPropertyOptions 
+} from "lost-c3-lib";
 
 enum PluginPropertyType {
     INTEGER = "integer", /**
@@ -46,8 +52,8 @@ enum PluginPropertyType {
 }
 const SDK = globalThis.SDK;
 
-const Config: Lost.Config = {} as Lost.Config;
-const PluginProperties: Lost.PluginProperty[] = [];
+const Config = {} as PluginConfig;
+const PluginProperties: PluginProperty[] = [];
 
 const PLUGIN_CLASS = SDK.Plugins[Config.AddonId] = class LPlugin extends SDK.IPluginBase {
     constructor() {
@@ -55,7 +61,7 @@ const PLUGIN_CLASS = SDK.Plugins[Config.AddonId] = class LPlugin extends SDK.IPl
         SDK.Lang.PushContext("plugins." + Config.AddonId.toLowerCase());
         this._info.SetName(globalThis.lang(".name"));
         this._info.SetDescription(globalThis.lang(".description"));
-        this._info.SetCategory(Config.AddonCategory);
+        this._info.SetCategory(Config.PluginCategory);
         this._info.SetAuthor(Config.Author);
         this._info.SetHelpUrl(globalThis.lang(".help-url"));
         this._info.SetIcon(Config.Icon.FileName, Config.Icon.Type);
@@ -69,7 +75,7 @@ const PLUGIN_CLASS = SDK.Plugins[Config.AddonId] = class LPlugin extends SDK.IPl
         if (Config.Scripts) {
             Config.Scripts.forEach(script => {
                 if (script.Type === 'external-dom-script') {
-                    const scriptType = (script as Lost.ExternalDomScript).ScriptType;
+                    const scriptType = (script as ExternalDomScript).ScriptType;
                     if (scriptType) {
                         this._info.AddFileDependency({filename: 'libs/' +  script.FileName, type: script.Type, fileType: scriptType});
                     } else {
@@ -98,41 +104,41 @@ const PLUGIN_CLASS = SDK.Plugins[Config.AddonId] = class LPlugin extends SDK.IPl
         PluginProperties.forEach(pp => {
             if (pp.Type === PluginPropertyType.INTEGER) {
                 pluginProperties.push(
-                    new SDK.PluginProperty(pp.Type, pp.Options.Id, { initialValue: (pp.Options as Lost.IntegerPropertyOptions).InitialValue })
+                    new SDK.PluginProperty(pp.Type, pp.Options.Id, { initialValue: (pp.Options as IntegerPropertyOptions).InitialValue })
                 );
             }
             if (pp.Type === PluginPropertyType.FLOAT) {
                 pluginProperties.push(
-                    new SDK.PluginProperty(pp.Type, pp.Options.Id, { initialValue: (pp.Options as Lost.FloatPropertyOptions).InitialValue })
+                    new SDK.PluginProperty(pp.Type, pp.Options.Id, { initialValue: (pp.Options as FloatPropertyOptions).InitialValue })
                 );
             }
             if (pp.Type === PluginPropertyType.PERCENT) {
                 pluginProperties.push(
-                    new SDK.PluginProperty(pp.Type, pp.Options.Id, { initialValue: (pp.Options as Lost.PercentPropertyOptions).InitialValue })
+                    new SDK.PluginProperty(pp.Type, pp.Options.Id, { initialValue: (pp.Options as PercentPropertyOptions).InitialValue })
                 );
             }
             if (pp.Type === PluginPropertyType.TEXT) {
                 pluginProperties.push(
-                    new SDK.PluginProperty(pp.Type, pp.Options.Id, { initialValue: (pp.Options as Lost.TextPropertyOptions).InitialValue })
+                    new SDK.PluginProperty(pp.Type, pp.Options.Id, { initialValue: (pp.Options as TextPropertyOptions).InitialValue })
                 );
             }
             if (pp.Type === PluginPropertyType.LONG_TEXT) {
                 pluginProperties.push(
-                    new SDK.PluginProperty(pp.Type, pp.Options.Id, { initialValue: (pp.Options as Lost.LongTextPropertyOptions).InitialValue })
+                    new SDK.PluginProperty(pp.Type, pp.Options.Id, { initialValue: (pp.Options as LongTextPropertyOptions).InitialValue })
                 );
             }
             if (pp.Type === PluginPropertyType.CHECK) {
                 pluginProperties.push(
-                    new SDK.PluginProperty(pp.Type, pp.Options.Id, { initialValue: (pp.Options as Lost.CheckPropertyOptions).InitialValue })
+                    new SDK.PluginProperty(pp.Type, pp.Options.Id, { initialValue: (pp.Options as CheckPropertyOptions).InitialValue })
                 );
             }
             if (pp.Type === PluginPropertyType.FONT) {
                 pluginProperties.push(
-                    new SDK.PluginProperty(pp.Type, pp.Options.Id, { initialValue: (pp.Options as Lost.FontPropertyOptions).InitialValue })
+                    new SDK.PluginProperty(pp.Type, pp.Options.Id, { initialValue: (pp.Options as FontPropertyOptions).InitialValue })
                 );
             }
             if (pp.Type === PluginPropertyType.COMBO) {
-                const Options = (pp.Options as Lost.ComboPropertyOptions);
+                const Options = (pp.Options as ComboPropertyOptions);
                 const Items: string[] = Options.Items.map(i => i.Id);
 
                 let InitialValue = Options.InitialValue;
@@ -148,12 +154,12 @@ const PLUGIN_CLASS = SDK.Plugins[Config.AddonId] = class LPlugin extends SDK.IPl
             }
             if (pp.Type === PluginPropertyType.COLOR) {
                 pluginProperties.push(
-                    new SDK.PluginProperty(pp.Type, pp.Options.Id, { initialValue: (pp.Options as Lost.ColorPropertyOptions).InitialValue })
+                    new SDK.PluginProperty(pp.Type, pp.Options.Id, { initialValue: (pp.Options as ColorPropertyOptions).InitialValue })
                 );
             }
             if (pp.Type === PluginPropertyType.OBJECT) {
                 pluginProperties.push(
-                    new SDK.PluginProperty(pp.Type, pp.Options.Id, { allowedPluginIds: (pp.Options as Lost.ObjectPropertyOptions).AllowedPluginIds })
+                    new SDK.PluginProperty(pp.Type, pp.Options.Id, { allowedPluginIds: (pp.Options as ObjectPropertyOptions).AllowedPluginIds })
                 );
             }
             if (pp.Type === PluginPropertyType.GROUP) {

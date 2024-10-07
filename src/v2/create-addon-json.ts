@@ -1,9 +1,9 @@
-import { Lost } from 'lost-c3-lib';
+import { PluginConfig, BehaviorConfig, AddonJSON } from 'lost-c3-lib';
 import { ADDON_PATH } from './globals';
 import * as fs from 'fs';
 
-export async function createAddonJSONFile(config: Lost.Config) {
-    const AddonJSON: Lost.AddonJSON = {
+export async function createAddonJSONFile(config: PluginConfig | BehaviorConfig) {
+    const AddonJSON: AddonJSON = {
         "is-c3-addon": true,
         "sdk-version": 2,
         "type": config.Type,
@@ -15,12 +15,10 @@ export async function createAddonJSONFile(config: Lost.Config) {
         "documentation": config.DocsURL,
         "description": config.AddonDescription,
         "editor-scripts": [
-            "plugin.js",
             "type.js",
             "instance.js"
         ],
         "file-list": [
-            "c3runtime/plugin.js",
             "c3runtime/type.js",
             "c3runtime/instance.js",
             "c3runtime/conditions.js",
@@ -30,9 +28,17 @@ export async function createAddonJSONFile(config: Lost.Config) {
             "aces.json",
             "addon.json",
             "instance.js",
-            "plugin.js",
             "type.js"
         ]
+    }
+
+    if (config.Type === 'plugin') {
+        AddonJSON["editor-scripts"].push("plugin.js");
+        AddonJSON["file-list"].push("c3runtime/plugin.js", "plugin.js");
+    }
+    if (config.Type === 'behavior') {
+        AddonJSON["editor-scripts"].push("behavior.js");
+        AddonJSON["file-list"].push("c3runtime/behavior.js", "behavior.js");
     }
 
     if (config.MinConstructVersion) {

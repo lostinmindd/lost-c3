@@ -23,7 +23,7 @@ const PLUGIN_CLASS = SDK.Plugins[Config.AddonId] = class LPlugin extends SDK.IPl
         SDK.Lang.PushContext("plugins." + Config.AddonId.toLowerCase());
         this._info.SetName(globalThis.lang(".name"));
         this._info.SetDescription(globalThis.lang(".description"));
-        this._info.SetCategory(Config.AddonCategory);
+        this._info.SetCategory(Config.PluginCategory);
         this._info.SetAuthor(Config.Author);
         this._info.SetHelpUrl(globalThis.lang(".help-url"));
         this._info.SetIcon(Config.Icon.FileName, Config.Icon.Type);

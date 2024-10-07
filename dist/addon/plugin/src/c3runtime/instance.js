@@ -12,4 +12,3 @@ class LInstance extends globalThis.ISDKInstanceBase {
 }
 ;
 C3.Plugins[Config.AddonId].Instance = LInstance;
-// export {};

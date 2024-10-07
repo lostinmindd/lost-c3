@@ -39,12 +39,10 @@ async function createAddonJSONFile(config) {
         "documentation": config.DocsURL,
         "description": config.AddonDescription,
         "editor-scripts": [
-            "plugin.js",
             "type.js",
             "instance.js"
         ],
         "file-list": [
-            "c3runtime/plugin.js",
             "c3runtime/type.js",
             "c3runtime/instance.js",
             "c3runtime/conditions.js",
@@ -54,10 +52,17 @@ async function createAddonJSONFile(config) {
             "aces.json",
             "addon.json",
             "instance.js",
-            "plugin.js",
             "type.js"
         ]
     };
+    if (config.Type === 'plugin') {
+        AddonJSON["editor-scripts"].push("plugin.js");
+        AddonJSON["file-list"].push("c3runtime/plugin.js", "plugin.js");
+    }
+    if (config.Type === 'behavior') {
+        AddonJSON["editor-scripts"].push("behavior.js");
+        AddonJSON["file-list"].push("c3runtime/behavior.js", "behavior.js");
+    }
     if (config.MinConstructVersion) {
         AddonJSON["min-construct-version"] = config.MinConstructVersion;
     }

@@ -14,22 +14,28 @@ import { build } from './v2';
  * Initialize lost addon file structure
  */
 yargs(hideBin(process.argv)).command('init', 'Initialize lost addon file structure', (yargs) => {
-    return yargs.option('plugin', 
-        {
-            alias: 'a',
+    return yargs
+        .option('plugin', {
+            alias: 'p',
             type: 'boolean',
             description: 'Create plugin addon structure'
         })
+        .option('behavior', {
+            alias: 'b',
+            type: 'boolean',
+            description: 'Create behavior addon structure'
+        });
     }, (argv) => {
         let addonType = "plugin";
 
         if (argv.plugin) addonType = "plugin";
+        if (argv.behavior) addonType = "behavior";
 
         const sourceFolder = path.resolve(__dirname, `../default-file-structure/${addonType}`)
         const targetDir = process.cwd();
 
-        if (argv.plugin) {
-            log(`Creating ${magentaBG('plugin')} file structure...`, 'white');
+        if (argv.plugin || argv.behavior) {
+            log(`Creating ${magentaBG(`${addonType}`)} file structure...`, 'white');
             copyBaseAddonFiles(sourceFolder, targetDir);
             exec('npm i');
         }

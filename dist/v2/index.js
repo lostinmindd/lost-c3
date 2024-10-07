@@ -24,10 +24,10 @@ async function build() {
     fs_1.default.mkdirSync(path_1.default.resolve(`${globals_1.SOURCE_FOLDER}/addon/files`), { recursive: true });
     (0, console_log_colors_1.log)(`Getting Lost config...`, 'white');
     const Config = await (0, get_config_1.getConfig)();
-    (0, console_log_colors_1.log)(`Getting plugin properties...`, 'white');
+    (0, console_log_colors_1.log)(`Getting plugin ${(0, console_log_colors_1.red)('properties')}...`, 'white');
     const PluginProperties = await (0, get_plugin_properties_1.getPluginProperties)();
     (0, console_log_colors_1.log)(`Total properties: ${PluginProperties.length}`, 'white');
-    (0, console_log_colors_1.log)(`Getting plugin categories...\n`, 'white');
+    (0, console_log_colors_1.log)(`Getting plugin ${(0, console_log_colors_1.redBright)('categories')}...\n`, 'white');
     let Categories = await (0, get_categories_1.getCategories)();
     (0, console_log_colors_1.log)(`--------------------\n`, 'white');
     const ids = [];
@@ -35,7 +35,7 @@ async function build() {
         const actionsCount = category.Actions.length;
         const conditionsCount = category.Conditions.length;
         const expressionsCount = category.Expressions.length;
-        if (category.Options.InDevelopment) {
+        if (category.InDevelopment) {
             (0, console_log_colors_1.log)(`${(0, console_log_colors_1.yellow)(`[${index + 1}]`)} Dev (${(0, console_log_colors_1.bold)((0, console_log_colors_1.gray)(category.Name))}), Actions: ${(0, console_log_colors_1.yellow)(actionsCount)}, Conditions: ${(0, console_log_colors_1.yellow)(conditionsCount)}, Expressions: ${(0, console_log_colors_1.yellow)(expressionsCount)}`, 'blackBG');
         }
         else
@@ -47,7 +47,7 @@ async function build() {
         ids.push(category.Id);
     });
     (0, console_log_colors_1.log)(`\n--------------------\n`, 'white');
-    Categories = Categories.filter(category => category.Options.InDevelopment === false);
+    Categories = Categories.filter(category => category.InDevelopment === false);
     (0, console_log_colors_1.log)(`Creating addon structure..`, 'white');
     await (0, create_addon_structure_1.createAddonStructure)(Config, PluginProperties);
     await (0, misc_functions_1.removePreviousFolder)(path_1.default.resolve(`${globals_1.BUILD_FOLDER}`));

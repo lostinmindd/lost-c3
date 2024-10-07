@@ -9,11 +9,12 @@ const globals_1 = require("./globals");
 const fs_1 = __importDefault(require("fs"));
 async function createLanguageJSONFile(config, categories, pluginProperties) {
     const PLUGIN_ID = (config.AddonId).toLowerCase();
+    const ADDON_TYPE = `${config.Type}s`;
     let LanguageJSON = {
         "languageTag": "en-US",
         "fileDescription": `Strings for ${config.AddonName} addon.`,
         "text": {
-            "plugins": {
+            [ADDON_TYPE]: {
                 [PLUGIN_ID]: {
                     "name": config.ObjectName,
                     "description": config.AddonDescription,
@@ -31,7 +32,7 @@ async function createLanguageJSONFile(config, categories, pluginProperties) {
         let langProperty = {};
         langProperty.name = p.Options.Name;
         langProperty.desc = (p.Options.Description) ? p.Options.Description : "";
-        if (p.Type === lost_c3_lib_1.Lost.PluginPropertyType.COMBO) {
+        if (p.Type === lost_c3_lib_1.PluginPropertyType.COMBO) {
             const Options = p.Options;
             langProperty["items"] = {};
             Options.Items.forEach((item) => {
@@ -39,10 +40,10 @@ async function createLanguageJSONFile(config, categories, pluginProperties) {
                     langProperty["items"][item.Id] = item.Name;
             });
         }
-        LanguageJSON.text.plugins[PLUGIN_ID].properties[p.Options.Id] = langProperty;
+        LanguageJSON["text"][ADDON_TYPE][PLUGIN_ID].properties[p.Options.Id] = langProperty;
     });
     categories.forEach(c => {
-        LanguageJSON.text.plugins[PLUGIN_ID].aceCategories[c.Id] = c.Name;
+        LanguageJSON["text"][ADDON_TYPE][PLUGIN_ID].aceCategories[c.Id] = c.Name;
         c.Actions.forEach(action => {
             let languageAction = {};
             languageAction["list-name"] = action.Name;
@@ -55,7 +56,7 @@ async function createLanguageJSONFile(config, categories, pluginProperties) {
                         "name": param.Options.Name,
                         "desc": (param.Options.Description) ? param.Options.Description : ""
                     };
-                    if (param.Type === "combo" /* Lost.ParamType.COMBO */) {
+                    if (param.Type === "combo" /* ParamType.COMBO */) {
                         const Options = param.Options;
                         params[Options.Id]["items"] = {};
                         Options.Items.forEach((item) => {
@@ -66,7 +67,7 @@ async function createLanguageJSONFile(config, categories, pluginProperties) {
                 });
                 languageAction["params"] = params;
             }
-            LanguageJSON["text"]["plugins"][PLUGIN_ID].actions[action.Id] = languageAction;
+            LanguageJSON["text"][ADDON_TYPE][PLUGIN_ID].actions[action.Id] = languageAction;
         });
         c.Conditions.forEach(condition => {
             let languageCondition = {};
@@ -80,7 +81,7 @@ async function createLanguageJSONFile(config, categories, pluginProperties) {
                         "name": param.Options.Name,
                         "desc": (param.Options.Description) ? param.Options.Description : ""
                     };
-                    if (param.Type === "combo" /* Lost.ParamType.COMBO */) {
+                    if (param.Type === "combo" /* ParamType.COMBO */) {
                         const Options = param.Options;
                         params[Options.Id]["items"] = {};
                         Options.Items.forEach((item) => {
@@ -91,7 +92,7 @@ async function createLanguageJSONFile(config, categories, pluginProperties) {
                 });
                 languageCondition["params"] = params;
             }
-            LanguageJSON["text"]["plugins"][PLUGIN_ID].conditions[condition.Id] = languageCondition;
+            LanguageJSON["text"][ADDON_TYPE][PLUGIN_ID].conditions[condition.Id] = languageCondition;
         });
         c.Expressions.forEach(expression => {
             let languageExpression = {};
@@ -107,7 +108,7 @@ async function createLanguageJSONFile(config, categories, pluginProperties) {
                 });
                 languageExpression["params"] = params;
             }
-            LanguageJSON["text"]["plugins"][PLUGIN_ID].expressions[expression.Id] = languageExpression;
+            LanguageJSON["text"][ADDON_TYPE][PLUGIN_ID].expressions[expression.Id] = languageExpression;
         });
     });
     fs_1.default.writeFileSync(`${globals_1.ADDON_PATH}/lang/en-US.json`, JSON.stringify(LanguageJSON, null, 4));

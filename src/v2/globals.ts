@@ -8,6 +8,7 @@ export const ADDON_FOLDER = 'build/addon';
  * Library paths
  */
 export const PLUGIN_BONES_FOLDER_PATH = path.resolve(__dirname, '../../src/addon/plugin/dist');
+export const BEHAVIOR_BONES_FOLDER_PATH = path.resolve(__dirname, '../../src/addon/behavior/dist');
 
 /**
  * Build paths
@@ -15,7 +16,6 @@ export const PLUGIN_BONES_FOLDER_PATH = path.resolve(__dirname, '../../src/addon
 export const CONFIG_PATH = path.resolve(`${BUILD_FOLDER}/lost.config.js`);
 export const PLUGIN_PROPERTIES_PATH = path.resolve(`${BUILD_FOLDER}/plugin.properties.js`);
 export const INSTANCE_PATH = path.resolve(`${BUILD_FOLDER}/addon/Instance.js`);
-export const DOMSIDE_PATH = path.resolve(`${BUILD_FOLDER}/addon/DomSide.js`);
 export const CATEGORIES_FOLDER_PATH = path.resolve(`${BUILD_FOLDER}/addon/categories`);
 
 /**
@@ -30,10 +30,12 @@ export const FILES_FOLDER_PATH = path.resolve(`${SOURCE_FOLDER}/addon/files`);
 export const ADDON_PATH = path.resolve(`${ADDON_FOLDER}`);
 
 export const FINAL_INSTANCE_PATH = path.resolve(`${ADDON_FOLDER}/c3runtime/instance.js`);
-export const FINAL_DOMSIDE_PATH = path.resolve(`${ADDON_FOLDER}/c3runtime/domSide.js`);
 export const FINAL_LIBRARIES_FOLDER_PATH = path.resolve(`${ADDON_FOLDER}/libs`);
 export const FINAL_FILES_FOLDER_PATH = path.resolve(`${ADDON_FOLDER}/files`);
+
 export const MAIN_PLUGIN_JS_PATH = path.resolve(`${ADDON_FOLDER}/plugin.js`);
+export const MAIN_BEHAVIOR_JS_PATH = path.resolve(`${ADDON_FOLDER}/behavior.js`);
+
 export const C3RUNTIME_FOLDER_PATH = path.resolve(`${ADDON_FOLDER}/c3runtime`);
 
 /**
