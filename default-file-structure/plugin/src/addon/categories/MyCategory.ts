@@ -16,7 +16,7 @@ class MyCategory extends LostCategory {
         DisplayText: `Do action`,
         Description: `Do something...`,
     })
-    doAction(this: Instance) {  };
+    doAction(this: Instance) { console.log('Do something') };
 
 
     /**
@@ -29,7 +29,7 @@ class MyCategory extends LostCategory {
         Description: `On something done...`,
         IsTrigger: true
     })
-    onDone(this: Instance) {  };
+    onDone(this: Instance) { return true };
 
 
     /**
@@ -38,11 +38,10 @@ class MyCategory extends LostCategory {
     @Expression({
         Id: `IsDone`,
         Name: `IsDone`,
-        DisplayText: `IsDone`,
         Description: `Is something done`,
         ReturnType: 'string'
     })
-    IsDone(this: Instance) { };
+    IsDone(this: Instance) { return 'string'};
 
 }
 const Category = new MyCategory();

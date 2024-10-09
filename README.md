@@ -24,7 +24,9 @@ Create a bare-bones Lost Addon for __plugin__ by using `lost-c3 init --plugin`
 
 ```bash
 npm i lost-c3-cli -g
-lost-c3 init --plugin # For plugin 
+lost-c3 init --plugin # For plugin
+OR
+lost-c3 init --behavior # For behavior (BETA)
 npm run build
 ```
 
@@ -37,14 +39,15 @@ After using `lost-c3 init --plugin` we get default file structure for creating a
 ``` bash
 ├── build/                      # Final build folder (creates automatically after build)
 │   ├── addon/   
-│   ├── lost/   
+│   ├── lost/                   # Final Lost Addon build folder (creates automatically after build)
 ├── node_modules/               # 'node_modules' folder
 ├── src/                        # Main addon folder
 │   ├── addon/                  # Construct 3 Typescript based addon folder
 │       ├── categories/         # Addon categories folder
 │       ├── files/              # Addon other files folder
 │       ├── libs/               # Addon libraries folder (only .js libraries, use .d.ts
-│       ├── ts-defs/
+│       ├── ts-defs/            # Construct declaration files
+│       ├── global.d.ts         # Custom declarations file        
 │       └── Instance.ts         # Main addon Instance class.
 │   ├── icon.svg                # Addon icon file (only image/svg format!)
 │   ├── lost.config.ts          # Lost addon config file
@@ -56,15 +59,16 @@ After using `lost-c3 init --plugin` we get default file structure for creating a
 
 ## ⚙️ Config setup
 
-Let's setup _`lost.config.ts`_ file at first.
+Let's setup _`lost.config.ts`_ file for __Plugin Addon__ at first.
 
 ```typescript
-import { Lost } from "lost-c3-lib";
+import { AddonType, PluginConfig } from "lost-c3-lib";
 
-const Config: Lost.Config = {
+const Config: PluginConfig = {
     /**
-     * Common options
+     * Common
      */
+    SupportsWorkerMode: false,
     MinConstructVersion: "",
     IsSingleGlobal: true,
     IsDeprecated: false,
@@ -75,12 +79,12 @@ const Config: Lost.Config = {
      * Info
      */
     AddonId: "addon_id",
-    Type: "plugin",
-    AddonCategory: "general",
+    Type: AddonType.PLUGIN,
+    Category: "general",
     AddonName: "My First Lost Addon",
-    AddonDescription: "My first lost addon is awesome!",
+    AddonDescription: "My first awesome addon created with Lost Library!",
     Version: "1.0.0.0",
-    Author: "Lost",
+    Author: "lostinmind.",
     WebsiteURL: "https://addon.com",
     DocsURL: "https://docs.addon.com",
     Icon: {
@@ -89,18 +93,20 @@ const Config: Lost.Config = {
     },
 
     /**
-     * Files
+     * Remote scripts
      */
-    Scripts: [
-        {FileName: 'library.js', Type: 'external-dom-script', ScriptType: 'module'},
-        {FileName: 'library.js', Type: 'external-runtime-script'}
-    ],
     RemoteScripts: [
         "https://script/library.js"
     ],
+
+    /**
+     * Files
+     */
+    Scripts: [
+        {FileName: 'library.js', Type: 'external-dom-script'},
+    ],
     Files: [
         {FileName: '', Type: 'external-css'},
-        {FileName: '', Type: 'copy-to-output'}
     ]
 }
 
@@ -123,35 +129,16 @@ It's available to use custom scripts or libraries in your addon.
 Example of adding custom script
 
 ```typescript
-import { Lost } from "lost-c3-lib";
+import { PluginConfig } from "lost-c3-lib";
 
-const Config: Lost.Config = {
+const Config: PluginConfig = {
 
     /**
      * Here we added some objects 
      */
     Scripts: [
-        {FileName: 'library.js', Type: 'external-dom-script', ScriptType: 'module'},
+        {FileName: 'library.js', Type: 'external-dom-script', ScriptType?: 'module'},
     ],
-
-    MinConstructVersion: "",
-    IsSingleGlobal: true,
-    IsDeprecated: false,
-    CanBeBundled: true,
-    ObjectName: "MyLostAddon",
-    AddonId: "addon_id",
-    Type: "plugin",
-    AddonCategory: "general",
-    AddonName: "My First Lost Addon",
-    AddonDescription: "My first lost addon is awesome!",
-    Version: "1.0.0.0",
-    Author: "Lost",
-    WebsiteURL: "https://addon.com",
-    DocsURL: "https://docs.addon.com",
-    Icon: {
-        FileName: 'icon.svg',
-        Type: 'image/svg+xml'
-    }
 }
 
 export { Config };
@@ -185,9 +172,14 @@ Use _`plugin.properties.ts`_ file to specify any plugin properties for your addo
 Example
 
 ```typescript
-import { CheckProperty, ColorProperty, ComboProperty, FloatProperty, FontProperty, GroupProperty, IntegerProperty, LongTextProperty, ObjectProperty, PercentProperty, TextProperty } from "lost-lib";
+import { 
+    PluginProperty, CheckProperty, ColorProperty, 
+    ComboProperty, FloatProperty, FontProperty, 
+    GroupProperty, IntegerProperty, LongTextProperty, 
+    ObjectProperty, PercentProperty, TextProperty 
+} from "lost-c3-lib"; 
 
-const PluginProperties: Lost.PluginProperty[] = [
+const PluginProperties: PluginProperty[] = [
     new IntegerProperty({
         Id: "int",
         Name: "Integer Property",
@@ -253,22 +245,59 @@ export { PluginProperties };
 
 ## 📁 Creating category
 
-To create category you should create new  __`CategoryName.ts`__ file in _`src/addon/categories`_ folder.
+To create category you should create new  __`CategoryName.ts`__ file in _`src/addon/categories`_ folder. Also you can create folders inside _`/categories`_ folder
 Then you can use code snippet __`!CC`__ to create default Category structure or copy-paste below script.
 
 ```typescript
-import { Lost, Action, Condition, Expression } from "lost-c3-lib"; 
-import type { Instance } from "@Instance";
+import { LostCategory, Action, Condition, Expression } from 'lost-c3-lib';
+import type { Instance } from '@Instance';
 
-class MyCategory extends Lost.Category {
-    
+class MyCategory extends LostCategory {
+
+    constructor() {
+        /**
+         * Specify category Id, Name and other optional properties.
+         */
+        super({Id: 'myCategory', Name: 'My Category', /*Deprecated: false, InDevelopment: false*/});
+    };
+
     /**
-     * @super(categoryId: string, categoryName: string)
+     * Actions
      */
-    constructor() { super('main', 'My Category') };
+    @Action({
+        Id: `doAction`,
+        Name: `Do action`,
+        DisplayText: `Do action`,
+        Description: `Do something...`,
+    })
+    doAction(this: Instance) { console.log('Do something') };
+
+
+    /**
+     * Conditions
+     */
+    @Condition({
+        Id: `onDone`,
+        Name: `On done`,
+        DisplayText: `On done`,
+        Description: `On something done...`,
+        IsTrigger: true
+    })
+    onDone(this: Instance) { return true };
+
+
+    /**
+     * Expressions
+     */
+    @Expression({
+        Id: `IsDone`,
+        Name: `IsDone`,
+        Description: `Is something done`,
+        ReturnType: 'string'
+    })
+    IsDone(this: Instance) { return 'string'};
 
 }
-
 const Category = new MyCategory();
 export { Category };
 ```
@@ -283,12 +312,14 @@ To create actions for your addon you should use _`@Action`_ decorator of functio
 Example
 
 ```typescript
-import { Lost, Action, StringParam } from "lost-c3-lib"; 
+import { LostCategory, Action, StringParam } from "lost-c3-lib"; 
 import type { Instance } from "@Instance";
 
-class MyCategory extends Lost.Category {
+class MyCategory extends LostCategory {
     
-    constructor() { super('myCategoryId', 'My Category') };
+    constructor() { 
+        super({Id: 'myCategory', Name: 'My Category'});
+    };
 
     @Action({
         /**
@@ -362,17 +393,19 @@ To create conditions for your addon you should use _`@Condition`_ decorator of f
 Example
 
 ```typescript
-import { Lost, Condition, ComboParam } from "lost-c3-lib"; 
+import { LostCategory, Condition, ComboParam, Italic } from "lost-c3-lib"; 
 import type { Instance } from "@Instance";
 
-class MyCategory extends Lost.Category {
+class MyCategory extends LostCategory {
     
-    constructor() { super('myCategoryId', 'My Category') };
+    constructor() { 
+        super({Id: 'myCategory', Name: 'My Category'});
+    };
 
     @Condition({
         Id: 'myCondition',
         Name: 'On event',
-        DisplayText: 'On event [i]{0}[/i]',
+        DisplayText: `On event ${Italic('{0}')}`,
         /**
          * Set to true to highlight the ACE in the condition/action/expression picker dialogs.
          */
@@ -385,7 +418,7 @@ class MyCategory extends Lost.Category {
         IsTrigger: true,
         IsCompatibleWithTriggers: false,
         IsFakeTrigger: false,
-        IsInvertible: false,
+        IsInvertible: true,
         IsLooping: false,
         IsStatic: false,
         Params: [
@@ -434,20 +467,18 @@ To create expressions for your addon you should use _`@Expression`_ decorator of
 Example
 
 ```typescript
-import { Lost, Expression, StringParam } from "lost-c3-lib"; 
+import { LostCategory, Expression, StringParam } from "lost-c3-lib"; 
 import type { Instance } from "@Instance";
 
-class MyCategory extends Lost.Category {
+class MyCategory extends LostCategory {
     
-    constructor() { super('myCategoryId', 'My Category') };
+    constructor() { 
+        super({Id: 'myCategory', Name: 'My Category'});
+    };
 
     @Expression({
         Id: 'getValue',
-        /**
-         * Name will not be used, but required
-         */
         Name: 'GetValue',
-        DisplayText: 'GetValue',
         ReturnType: 'string',
         /**
          * If true, Construct 3 will allow the user to enter any number of parameters beyond those defined. 
@@ -512,7 +543,7 @@ Main instance class is available at path _`src/addon/Instance.ts`_.
 >		}
 >
 >	}
->	
+>
 >	_release() {
 >		super._release();
 >	}
@@ -525,12 +556,14 @@ Main instance class is available at path _`src/addon/Instance.ts`_.
 >
 >_Category.ts_
 > ```typescript
->import { Lost, Action } from "lost-c3-lib"; 
+>import { LostCategory, Action } from "lost-c3-lib"; 
 >import type { Instance } from "@Instance";
 >
->class MyCategory extends Lost.Category {
+>class MyCategory extends LostCategory {
 >    
->    constructor() { super('myCategoryId', 'My Category') };
+>    constructor() { 
+>        super({Id: 'myCategory', Name: 'My Category'});
+>    };
 >
 >    @Action({
 >        Id: 'getValue',

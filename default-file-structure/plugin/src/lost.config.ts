@@ -1,10 +1,11 @@
-import { PluginConfig } from "lost-c3-lib";
+import { AddonType, PluginConfig } from "lost-c3-lib";
 
 const Config: PluginConfig = {
     /**
      * Common
      */
-    MinConstructVersion: "",
+    // SupportsWorkerMode: false,
+    // MinConstructVersion: "",
     IsSingleGlobal: true,
     IsDeprecated: false,
     CanBeBundled: true,
@@ -14,12 +15,12 @@ const Config: PluginConfig = {
      * Info
      */
     AddonId: "addon_id",
-    Type: "plugin",
-    PluginCategory: "general",
+    Type: AddonType.PLUGIN,
+    Category: "general",
     AddonName: "My First Lost Addon",
-    AddonDescription: "My first lost addon is awesome!",
+    AddonDescription: "My first awesome addon created with Lost Library!",
     Version: "1.0.0.0",
-    Author: "Lost",
+    Author: "lostinmind.",
     WebsiteURL: "https://addon.com",
     DocsURL: "https://docs.addon.com",
     Icon: {
@@ -28,18 +29,20 @@ const Config: PluginConfig = {
     },
 
     /**
-     * Files
+     * Remote scripts
      */
-    // Scripts: [
-    //     {FileName: 'library.js', Type: 'external-dom-script', ScriptType: 'module'},
-    //     {FileName: 'library.js', Type: 'external-runtime-script'}
-    // ],
     // RemoteScripts: [
     //     "https://script/library.js"
     // ],
+
+    /**
+     * Files
+     */
+    // Scripts: [
+    //     {FileName: 'library.js', Type: 'external-dom-script'},
+    // ],
     // Files: [
     //     {FileName: '', Type: 'external-css'},
-    //     {FileName: '', Type: 'copy-to-output'}
     // ]
 }
 

@@ -1,12 +1,10 @@
-import { IntegerProperty, TextProperty, LongTextProperty, PluginProperty } from "lost-c3-lib"; 
+import { 
+    PluginProperty, CheckProperty, ColorProperty, 
+    ComboProperty, FloatProperty, FontProperty, 
+    GroupProperty, IntegerProperty, LongTextProperty, 
+    ObjectProperty, PercentProperty, TextProperty 
+} from "lost-c3-lib"; 
 
-const PluginProperties: PluginProperty[] = [
-    new IntegerProperty({
-        Id: 'lostPluginProperty',
-        Name: 'Lost Plugin Property',
-        Description: 'This is my first integer plugin property...',
-        InitialValue: 0
-    })
-]
+const PluginProperties: PluginProperty[] = [];
 
 export { PluginProperties };
