@@ -66,6 +66,9 @@ async function createAddonJSONFile(config) {
     if (config.MinConstructVersion) {
         AddonJSON["min-construct-version"] = config.MinConstructVersion;
     }
+    if (config.SupportsWorkerMode) {
+        AddonJSON["supports-worker-mode"] = config.SupportsWorkerMode;
+    }
     AddonJSON['file-list'].push(`${config.Icon.FileName}`);
     if (config.Scripts) {
         config.Scripts.forEach(script => {

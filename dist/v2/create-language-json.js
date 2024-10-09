@@ -96,7 +96,7 @@ async function createLanguageJSONFile(config, categories, pluginProperties) {
         });
         c.Expressions.forEach(expression => {
             let languageExpression = {};
-            languageExpression["translated-name"] = expression.DisplayText;
+            languageExpression["translated-name"] = expression.Name;
             languageExpression["description"] = (expression.Description) ? expression.Description : "";
             if (expression.Params) {
                 let params = {};

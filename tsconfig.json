@@ -21,5 +21,5 @@
 		"rootDir": "./src",
 	},
 	"include": ["src/**/*"],                   // Включает все файлы в папке src
-	"exclude": ["node_modules", "**/*.test.ts"]// Исключает папку node_modules и тесты
+	"exclude": ["node_modules", "src/addon"]// Исключает папку node_modules и тесты
 }

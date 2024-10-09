@@ -14,14 +14,11 @@ async function zipAddon(config) {
     const addonPath = path_1.default.resolve(`build/${fileName}.c3addon`);
     const output = fs_extra_1.default.createWriteStream(addonPath);
     const archive = (0, archiver_1.default)('zip', { zlib: { level: 9 } });
-    // output.on('close', () => {
-    //     return true;
-    // })
     archive.on('error', (err) => {
         return false;
     });
     archive.pipe(output);
     archive.directory(sourceDirectory, false);
-    archive.finalize();
+    await archive.finalize();
     return true;
 }

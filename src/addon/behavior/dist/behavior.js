@@ -23,7 +23,7 @@ const BEHAVIOR_CLASS = SDK.Behaviors[Config.AddonId] = class LBehavior extends S
         SDK.Lang.PushContext("plugins." + Config.AddonId.toLowerCase());
         this._info.SetName(globalThis.lang(".name"));
         this._info.SetDescription(globalThis.lang(".description"));
-        this._info.SetCategory(Config.PluginCategory);
+        this._info.SetCategory(Config.Category);
         this._info.SetAuthor(Config.Author);
         this._info.SetHelpUrl(globalThis.lang(".help-url"));
         this._info.SetIcon(Config.Icon.FileName, Config.Icon.Type);

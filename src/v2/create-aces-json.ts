@@ -82,7 +82,7 @@ export async function createAcesJSONFile(categories: LostCategory[]) {
             aceCondition.isFakeTrigger = (condition.Options.IsFakeTrigger) ? condition.Options.IsFakeTrigger : false;
             aceCondition.isStatic = (condition.Options.IsStatic) ? condition.Options.IsStatic : false;
             aceCondition.isLooping = (condition.Options.IsLooping) ? condition.Options.IsLooping : false;
-            aceCondition.isInvertible = (condition.Options.IsInvertible) ? condition.Options.IsInvertible : false;
+            aceCondition.isInvertible = (condition.Options.IsInvertible) ? condition.Options.IsInvertible : true;
             aceCondition.isCompatibleWithTriggers = (condition.Options.IsCompatibleWithTriggers) ? condition.Options.IsCompatibleWithTriggers : false;
         
             if (condition.Params) {

@@ -23,7 +23,7 @@ const PLUGIN_CLASS = SDK.Plugins[Config.AddonId] = class LPlugin extends SDK.IPl
         SDK.Lang.PushContext("plugins." + Config.AddonId.toLowerCase());
         this._info.SetName(globalThis.lang(".name"));
         this._info.SetDescription(globalThis.lang(".description"));
-        this._info.SetCategory(Config.PluginCategory);
+        this._info.SetCategory(Config.Category);
         this._info.SetAuthor(Config.Author);
         this._info.SetHelpUrl(globalThis.lang(".help-url"));
         this._info.SetIcon(Config.Icon.FileName, Config.Icon.Type);
@@ -96,7 +96,11 @@ const PLUGIN_CLASS = SDK.Plugins[Config.AddonId] = class LPlugin extends SDK.IPl
                 pluginProperties.push(new SDK.PluginProperty(pp.Type, pp.Options.Id, { initialValue: pp.Options.InitialValue }));
             }
             if (pp.Type === PluginPropertyType.OBJECT) {
-                pluginProperties.push(new SDK.PluginProperty(pp.Type, pp.Options.Id, { allowedPluginIds: pp.Options.AllowedPluginIds }));
+                const options = { allowedPluginIds: pp.Options.AllowedPluginIds };
+                if (options.allowedPluginIds) {
+                    pluginProperties.push(new SDK.PluginProperty(pp.Type, pp.Options.Id), options);
+                }
+                pluginProperties.push(new SDK.PluginProperty(pp.Type, pp.Options.Id));
             }
             if (pp.Type === PluginPropertyType.GROUP) {
                 pluginProperties.push(new SDK.PluginProperty(pp.Type, pp.Options.Id));

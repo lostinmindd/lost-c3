@@ -131,7 +131,7 @@ export async function createLanguageJSONFile(config: PluginConfig | BehaviorConf
 
             let languageExpression = {} as LanguageExpression;
 
-            languageExpression["translated-name"] = expression.DisplayText;
+            languageExpression["translated-name"] = expression.Name;
             languageExpression["description"] = (expression.Description) ? expression.Description : "";
 
             if (expression.Params) {
